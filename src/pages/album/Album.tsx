@@ -28,14 +28,6 @@ const Album = () => {
           </AlbumInfo>
           </AlbumHeader>
         </Nav>
-        <Photos>
-          <Photo></Photo>
-          <Photo></Photo>
-          <Photo></Photo>
-          <Photo></Photo>
-          <Photo></Photo>
-          <Photo></Photo>
-        </Photos>
         <Button>Add photos</Button>
       </Inner>
     </Wrapper>

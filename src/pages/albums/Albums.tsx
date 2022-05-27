@@ -3,7 +3,7 @@ import { Container, Wrapper } from "../../components/Container/Container";
 import { Album, Albums, CreateMenu, IconWrapper, Name, Location, ButtonAdd, CreateMenuInner, ButtonCreate, Value, Input } from "./AlbumsStyles";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
-import {addAlbum, setAlbums} from "../../store/actions/user";
+import {addAlbum, setAlbums, setAuth} from "../../store/actions/user";
 import Logo from "../../components/Logo/Logo";
 import {LogoWrapper} from "../home/HomeStyles";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
@@ -15,14 +15,37 @@ const Home = () => {
   const id = TokensLocalStorage.getInstance().getUser()
   useEffect(()=>{
     dispatch(setAlbums(id) as any);
+    const updatePosition = () => {
+      setIsOpen(false);
+    }
+    window.addEventListener('keydown', function(event){
+      if(event.key === "Escape"){
+        setIsOpen(false)
+      }
+    });
+    updatePosition();
+    return () => window.removeEventListener("keydown", function(event){
+      if(event.key === "Escape"){
+        setIsOpen(false)
+      }
+    });
   }, [])
   const user = useSelector((state: any) => state.userReducer.user)
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState('')
   const [location, setLocation] = useState('')
+  const [message, setMessage]: any = useState(null)
   const albums = useSelector((state: any) => state.userReducer.albums)
   const isLoading = useSelector((state: any) => state.userReducer.isLoading)
-
+  const onAddClick = () => {
+    if (name === '' || location === ''){
+      return alert('Type all data')
+    } else {
+      dispatch(addAlbum(name, location, user.id) as any)
+      setIsOpen(false)
+      setMessage(null)
+    }
+  }
   return (
     <Wrapper>
       <LogoWrapper>
@@ -56,15 +79,20 @@ const Home = () => {
                     setIsOpen(false)
                   }}>close</ButtonCreate>
                   <Value>
-                    Name: <Input value={name} onChange={(e: any) => setName(e.currentTarget.value)} type="text"/>
+                    Name: <Input value={name}
+                                 onChange={(e: any) => setName(e.currentTarget.value)}
+                                 type="text"
+                                 onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id) as any) : null}
+                  />
                   </Value>
                   <Value>
-                    Location: <Input value={location} onChange={(e: any) => setLocation(e.currentTarget.value)} type="text"/>
+                    Location: <Input value={location}
+                                     onChange={(e: any) => setLocation(e.currentTarget.value)}
+                                     type="text"
+                                     onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id) as any) : null}
+                  />
                   </Value>
-                  <ButtonCreate onClick={() => {
-                    dispatch(addAlbum(name, location, user.id) as any)
-                    setIsOpen(false)
-                  }}>add</ButtonCreate>
+                  <ButtonCreate onClick={onAddClick}>add</ButtonCreate>
                 </CreateMenuInner>
               </Container>
             </Wrapper>

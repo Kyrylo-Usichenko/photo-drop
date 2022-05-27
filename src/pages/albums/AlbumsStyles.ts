@@ -39,15 +39,16 @@ export const CreateMenu: any = styled.div<{isOpen: boolean}>`
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: white;
   flex-direction: column;
   display: ${({isOpen}) => isOpen ? 'flex' : 'none'};
+  background-color: rgb(240, 241, 242);
+
 `;
 export const CreateMenuInner: any = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-width: 375px;
+  height: 100vh;
 `;
 
 export const Name: any = styled.div`

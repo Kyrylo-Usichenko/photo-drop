@@ -17,13 +17,13 @@ const Home = () => {
     const nav = useNavigate();
 
     const isAuth = useSelector((state: any)=> state.userReducer.isAuth)
+    const error = useSelector((state: any)=> state.userReducer.error)
     useEffect(()=> {
         if (isAuth) {
             nav('albums');
         }
     }
 )
-
 
     const onLoginChange = (e: React.FormEvent<HTMLInputElement>) => {
         setLogin(e.currentTarget.value);
@@ -43,24 +43,26 @@ const Home = () => {
             <Container>
                 <Inner>
                     <Form>
+                        {error ? 'incorrect username or password' : null}
                         <Input
                             onChange={onLoginChange}
                             value={login}
                             placeholder="Login"
                             type="text"
+                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuth(login, password) as any) : null}
                         />
                         <Input
                             onChange={onPasswordChange}
                             value={password}
                             placeholder="Password"
                             type="password"
+                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuth(login, password) as any) : null}
                         />
-                        {/*<Link style={{ width: "100%" }} href={"/albums"}>*/}
                         <Button
                             type="button"
                             onClick={() => dispatch(setAuth(login, password) as any)}
+
                         >Sign in</Button>
-                        {/*</Link>*/}
                     </Form>
                 </Inner>
             </Container>

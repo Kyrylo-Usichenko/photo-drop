@@ -9,7 +9,8 @@ export type UserActions = ReturnType<typeof userActions.setAuth
     | typeof userActions.setUser
     | typeof userActions.setAlbums
     | typeof userActions.setAlbumToStore
-    | typeof userActions.setLoading>
+    | typeof userActions.setLoading
+    | typeof userActions.setError>
 
 export const setAuth =
   (login: string, password: string): AsyncAction =>
@@ -18,10 +19,14 @@ export const setAuth =
       const AuthData = `${login};${password}`;
       const auth_data: string = btoa(AuthData);
       const response = await mainApi.login(auth_data);
-      // if(response.data == undefined){
-      //     console.log('((')
-      // }
-      const accessToken: string = response.data.access_token;
+        // @ts-ignore
+        if (response.status === 'ERROR'){
+            dispatch(userActions.setError(response.status))
+        } else {
+            dispatch(userActions.setError(null))
+
+        }
+        const accessToken: string = response.data.access_token;
       const user = response.data.user_data;
       const storage = TokensLocalStorage.getInstance();
       storage.setAccessToken(accessToken);
