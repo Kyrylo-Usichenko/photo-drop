@@ -10,13 +10,11 @@ function App() {
   return (
       <Provider store={store}>
         <BrowserRouter>
-          <div className="container">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/albums" element={<Albums />} />
-              <Route path="/album/*" element={<Album />} />
+              <Route path="/album/:id" element={<Album />} />
             </Routes>
-          </div>
         </BrowserRouter>
       </Provider>
   );

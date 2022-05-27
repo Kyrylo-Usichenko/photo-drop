@@ -83,7 +83,7 @@ export const Location: any = styled.div`
 `;
 export const ButtonAdd: any = styled(Button)`
   height: 50px;
-
+  margin: 0 0 10px 0;
 `;
 
 export const ButtonCreate: any = styled(Button)`
