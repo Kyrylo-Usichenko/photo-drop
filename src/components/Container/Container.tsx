@@ -6,6 +6,7 @@ export const Container: any = styled.div`
 `;
 export const Wrapper: any = styled.div`
   background-color: #fff;
+  width: 100%;
   min-height: 100vh;
   max-width: 560px;
   margin: 0 auto;

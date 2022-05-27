@@ -12,7 +12,8 @@ interface UserState {
   album: {
     name: string | null
   }
-  isLoading: boolean
+  isLoading: boolean,
+  error: string | null
 }
 
 const initialState: UserState = {
@@ -27,7 +28,8 @@ const initialState: UserState = {
   album: {
     name: null
   },
-  isLoading: true
+  isLoading: true,
+  error: null
 };
 
 
@@ -49,6 +51,9 @@ export class User extends ImmerReducer<UserState> {
   }
   setLoading(value: boolean) {
     this.draftState.isLoading = value;
+  }
+  setError(error: string | null) {
+    this.draftState.error = error;
   }
 }
 

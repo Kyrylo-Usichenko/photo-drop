@@ -34,13 +34,10 @@ export const Nav: any = styled.div`
   width: 100%;
   height: 55px;
   padding: 20px 0;
-  margin-left: 38px;
   border-top: 1px solid #F1F0EC;
   border-bottom: 1px solid #F1F0EC;
 `;
 export const Back: any = styled.div`
-  position: absolute;
-  left: -16px;
 `;
 
 export const AlbumHeader: any = styled.div`
