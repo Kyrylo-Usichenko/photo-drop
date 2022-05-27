@@ -59,7 +59,7 @@ export const setAlbum =
                { mainProtectedApi }) => {
             try {
                 const response = await mainProtectedApi.getAlbum(albumId);
-                dispatch(userActions.setAlbumToStore(response.data.name))
+                dispatch(userActions.setAlbumToStore(response.data))
             } catch (e) {
                 console.log(e);
             }
