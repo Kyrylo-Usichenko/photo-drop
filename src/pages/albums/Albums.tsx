@@ -15,6 +15,7 @@ const Home = () => {
   const [name, setName] = useState('')
   const [location, setLocation] = useState('')
   const dispatch = useDispatch();
+  console.log(albums)
   useEffect(()=>{
     dispatch(setAlbums(user.id) as any);
   }, [])
@@ -26,9 +27,11 @@ const Home = () => {
       <Container>
         <div>
           <Albums>
-            {albums.map((album: any) =>  <Link key={album.id} to={"/album"}>
-              <Album />
+            {albums.map((album: any) =>  <Link key={album.id} to={`/album/${album.id}`}>
+              <Album/>
               {/*<IoPhotoVideo/>*/}
+              <div>{album.name}</div>
+              <div>{album.location}</div>
             </Link>)}
           </Albums>
           <CreateMenu isOpen={isOpen}>
