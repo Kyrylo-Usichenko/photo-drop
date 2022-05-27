@@ -17,15 +17,14 @@ export const setAuth =
       const AuthData = `${login};${password}`;
       const auth_data: string = btoa(AuthData);
       const response = await mainApi.login(auth_data);
-      if(response.data == undefined){
-          console.log('((')
-      }
+      // if(response.data == undefined){
+      //     console.log('((')
+      // }
       const accessToken: string = response.data.access_token;
       const user = response.data.user_data;
       const storage = TokensLocalStorage.getInstance();
       storage.setAccessToken(accessToken);
       storage.setUser(user);
-        console.log(user)
       dispatch(userActions.setAuth(true));
       dispatch(userActions.setUser(user));
     } catch (e) {
