@@ -9,6 +9,9 @@ interface UserState {
     login: string | null,
   }
   albums: any
+  album: {
+    name: string | null
+  }
 }
 
 const initialState: UserState = {
@@ -19,7 +22,10 @@ const initialState: UserState = {
     id: null,
     login: null
   },
-  albums: []
+  albums: [],
+  album: {
+    name: null
+  }
 };
 
 
@@ -36,6 +42,10 @@ export class User extends ImmerReducer<UserState> {
   setAlbums(albums: any) {
     this.draftState.albums = albums;
   }
+  setAlbumToStore(name: string) {
+    this.draftState.album.name = name;
+  }
+
 }
 
 export default createReducerFunction(User, initialState);

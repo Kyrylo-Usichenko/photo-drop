@@ -6,20 +6,23 @@ html, body;{
     width: 100%;
     padding: 0;
     margin: 0;
-    background: rgb(240, 241, 242);
     font-family: 'Roboto', arial, sans-serif;
     font-weight: 400;
     color: #444;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-text-decoration: none;
-text-underline: none;
+    text-decoration: none;
+    text-underline: none;
 }
-
+body {
+    background: rgb(240, 241, 242);;
+}
 * {
     box-sizing: border-box;
     text-decoration: none;
     text-underline: none;
+    margin: 0;
+    padding: 0;
 }
 
 #preact_root {
