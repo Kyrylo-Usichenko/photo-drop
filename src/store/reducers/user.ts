@@ -33,8 +33,8 @@ export class User extends ImmerReducer<UserState> {
     this.draftState.user.login = user.login;
     this.draftState.user.email = user.email;
   }
-  setAlbums(asd: any) {
-    this.draftState.albums = asd;
+  setAlbums(albums: any) {
+    this.draftState.albums = albums;
   }
 }
 

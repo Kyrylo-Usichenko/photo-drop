@@ -5,7 +5,7 @@ import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 
 export const userActions = createActionCreators(User);
 
-export type UserActions = ReturnType<typeof userActions.setAuth | typeof userActions.setUser>;
+export type UserActions = ReturnType<typeof userActions.setAuth | typeof userActions.setUser |typeof userActions.setAlbums>;
 
 export const setAuth =
   (login: string, password: string): AsyncAction =>
@@ -20,7 +20,6 @@ export const setAuth =
       storage.setAccessToken(accessToken);
       dispatch(userActions.setAuth(true));
       dispatch(userActions.setUser(user));
-        console.log(user)
     } catch (e) {
       console.log(e);
     }
@@ -33,7 +32,7 @@ export const setAlbums =
                { mainProtectedApi }) => {
             try {
                 const response = await mainProtectedApi.getAlbums(userId);
-                console.log(response)
+                dispatch(userActions.setAlbums(response.data))
             } catch (e) {
                 console.log(e);
             }
@@ -50,7 +49,7 @@ export const addAlbum =
                     "name": name,
                     "location": location
                 });
-                console.log(response)
+                dispatch(setAlbums(userId))
             } catch (e) {
                 console.log(e);
             }

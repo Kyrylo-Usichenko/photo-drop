@@ -32,10 +32,9 @@ export default class MainProtected extends HttpClientProtected {
 
 
     public createAlbum = (data: {}) =>
-        this.instance.get<any>('/album/create', { headers:{
-                'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
-            }, data
-        });
+        this.instance.post<any>('/album/create', data,{ headers:{
+            'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
+            }});
 
     public editAlbum = (data: {}) =>
         this.instance.patch<any>('/album/edit', { headers:{

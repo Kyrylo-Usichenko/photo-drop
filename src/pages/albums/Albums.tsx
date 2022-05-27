@@ -10,36 +10,26 @@ import {LogoWrapper} from "../home/HomeStyles";
 
 const Home = () => {
   const user = useSelector((state: any) => state.userReducer.user)
+  const albums = useSelector((state: any) => state.userReducer.albums)
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState('')
   const [location, setLocation] = useState('')
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(setAlbums(user.id) as any);
-  }, [user])
+  }, [])
   return (
     <Wrapper>
       <LogoWrapper>
-        <Link to="/">
           <Logo />
-        </Link>
       </LogoWrapper>
       <Container>
         <div>
           <Albums>
-            <Link to={"/album"}>
+            {albums.map((album: any) =>  <Link key={album.id} to={"/album"}>
               <Album />
               {/*<IoPhotoVideo/>*/}
-            </Link>
-            <Link to={"/album"}>
-              <Album />
-            </Link>
-            <Link to={"/album"}>
-              <Album />
-            </Link>
-            <Link to={"/album"}>
-              <Album />
-            </Link>
+            </Link>)}
           </Albums>
           <CreateMenu isOpen={isOpen}>
             <button onClick={() => {
@@ -55,6 +45,7 @@ const Home = () => {
             </div>
             <button onClick={() => {
               dispatch(addAlbum(name, location, user.id) as any)
+              setIsOpen(false)
             }}>add</button>
           </CreateMenu>
         <Button type="button" onClick={() => setIsOpen(true)} value={'Create new album'}>+ Create new album</Button>
