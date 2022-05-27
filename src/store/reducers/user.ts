@@ -10,7 +10,8 @@ interface UserState {
   }
   albums: any
   album: {
-    name: string | null
+    name: string | null,
+    location: string | null
   }
   isLoading: boolean,
   error: string | null
@@ -26,7 +27,8 @@ const initialState: UserState = {
   },
   albums: [],
   album: {
-    name: null
+    name: null,
+    location: null
   },
   isLoading: true,
   error: null
@@ -46,8 +48,9 @@ export class User extends ImmerReducer<UserState> {
   setAlbums(albums: any) {
     this.draftState.albums = albums;
   }
-  setAlbumToStore(name: string) {
-    this.draftState.album.name = name;
+  setAlbumToStore(album: {name: string, location: string}) {
+    this.draftState.album.name = album.name;
+    this.draftState.album.location = album.location;
   }
   setLoading(value: boolean) {
     this.draftState.isLoading = value;

@@ -42,7 +42,7 @@ export const Back: any = styled.div`
 
 export const AlbumHeader: any = styled.div`
   display: flex;
-  flex-direction: column;
+  margin-left: 20px;
 `;
 
 export const Name: any = styled.div`
@@ -51,6 +51,7 @@ export const Name: any = styled.div`
   font-weight: 700;
   font-size: 20px;
   line-height: 22px;
+  margin-right: 20px;
 `;
 
 export const AlbumInfo: any = styled.div`
