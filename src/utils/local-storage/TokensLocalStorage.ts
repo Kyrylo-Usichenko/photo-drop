@@ -3,6 +3,7 @@ import LocalStorage from "./LocalStorage";
 enum Locals {
   ACCESS_TOKEN = "access_token",
   REFRESH_TOKEN = "refresh_token",
+  user = "user",
 }
 
 class TokensLocalStorage extends LocalStorage<Locals> {
@@ -23,6 +24,9 @@ class TokensLocalStorage extends LocalStorage<Locals> {
   public getAccessToken() {
     return this.get(Locals.ACCESS_TOKEN);
   }
+  public getUser() {
+    return this.get(Locals.user);
+  }
 
   public setAccessToken(accessToken: string) {
     this.set(Locals.ACCESS_TOKEN, accessToken);
@@ -34,6 +38,10 @@ class TokensLocalStorage extends LocalStorage<Locals> {
 
   public setRefreshToken(refreshToken: string) {
     this.set(Locals.REFRESH_TOKEN, refreshToken);
+  }
+
+  public setUser(user: any) {
+    this.set(Locals.user, user.id);
   }
 
   public clear() {

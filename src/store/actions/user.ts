@@ -18,6 +18,8 @@ export const setAuth =
       const user = response.data.user_data;
       const storage = TokensLocalStorage.getInstance();
       storage.setAccessToken(accessToken);
+      storage.setUser(user);
+        console.log(user)
       dispatch(userActions.setAuth(true));
       dispatch(userActions.setUser(user));
     } catch (e) {

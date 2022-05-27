@@ -12,13 +12,21 @@ html, body;{
     color: #444;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
+text-decoration: none;
+text-underline: none;
 }
 
 * {
     box-sizing: border-box;
+    text-decoration: none;
+    text-underline: none;
 }
 
 #preact_root {
     height: 100%;
+}
+
+a {
+    text-decoration: none;
+    text-underline: none;
 }
