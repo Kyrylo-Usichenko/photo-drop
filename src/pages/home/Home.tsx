@@ -11,8 +11,8 @@ import {history} from "../../store";
 import Albums from "../albums/Albums";
 
 const Home = () => {
-    const [login, setLogin] = useState<string>("kirill");
-    const [password, setPassword] = useState<string>("12345678");
+    const [login, setLogin] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const dispatch = useDispatch();
     const nav = useNavigate();
 
