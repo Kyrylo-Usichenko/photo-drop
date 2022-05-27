@@ -8,7 +8,8 @@ export const userActions = createActionCreators(User);
 export type UserActions = ReturnType<typeof userActions.setAuth
     | typeof userActions.setUser
     | typeof userActions.setAlbums
-    | typeof userActions.setAlbumToStore>;
+    | typeof userActions.setAlbumToStore
+    | typeof userActions.setLoading>
 
 export const setAuth =
   (login: string, password: string): AsyncAction =>
@@ -40,6 +41,7 @@ export const setAlbums =
             try {
                 const response = await mainProtectedApi.getAlbums(userId);
                 dispatch(userActions.setAlbums(response.data))
+                dispatch(userActions.setLoading(false))
             } catch (e) {
                 console.log(e);
             }
