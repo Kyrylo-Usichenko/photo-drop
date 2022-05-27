@@ -4,7 +4,7 @@ import {FaPhotoVideo} from "react-icons/all";
 export const Albums: any = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-top: 15px;
 `;
 export const Album: any = styled.div`

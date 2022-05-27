@@ -38,6 +38,18 @@ export const setAlbums =
             }
         };
 
+export const setAlbum =
+    (albumId: string): AsyncAction =>
+        async (dispatch,
+               _,
+               { mainProtectedApi }) => {
+            try {
+                const response = await mainProtectedApi.getAlbum(albumId);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
 export const addAlbum =
     (name: string, location: string, userId: string): AsyncAction =>
         async (dispatch,

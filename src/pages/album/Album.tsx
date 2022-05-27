@@ -2,8 +2,15 @@ import { Button } from "../../components/Button/Button";
 import {Back, Inner, Name, Nav, Photo, Photos, Date, NumberOfPhotos, AlbumHeader, AlbumInfo} from "./AlbumStyles";
 import { Wrapper } from "../../components/Container/Container";
 import {Link} from "react-router-dom";
+import {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {setAlbum} from "../../store/actions/user";
 
-const Home = () => {
+const Album = ({albumId}: any) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setAlbum(albumId) as any)
+  })
   return (
     <Wrapper>
       <Inner>
@@ -33,4 +40,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Album;
