@@ -49,7 +49,7 @@ export class User extends ImmerReducer<UserState> {
     this.draftState.user.login = user.login;
     this.draftState.user.email = user.email;
   }
-  setAlbums(albums: any) {
+  getAlbums(albums: any) {
     this.draftState.albums = albums;
   }
   setAlbumToStore(album: {name: string, location: string, id: string}) {
@@ -63,8 +63,9 @@ export class User extends ImmerReducer<UserState> {
   setError(error: string | null) {
     this.draftState.error = error;
   }
-  setPhotos(photos: any) {
+  getPhotos(photos: any) {
     this.draftState.photos = photos;
+    console.log(photos.length)
   }
 }
 

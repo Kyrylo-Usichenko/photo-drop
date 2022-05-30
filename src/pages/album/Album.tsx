@@ -3,30 +3,37 @@ import {Wrapper} from "../../components/Container/Container";
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addPhoto, setAlbum, getPhotos} from "../../store/actions/user";
+import {addPhoto, getAlbum, getPhotos} from "../../store/actions/user";
 import { Button } from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 
 const Album = () => {
     const dispatch = useDispatch();
     const params = useParams();
-    useEffect(() => {
-        dispatch(setAlbum(params.id) as any)
-        dispatch(getPhotos(params.id) as any)
-    }, [])
     const album = useSelector((state: any) => state.userReducer.album)
     const photos = useSelector((state: any) => state.userReducer.photos)
     const hiddenFileInput = useRef(null);
     const userId = TokensLocalStorage.getInstance().getUser()
-    const [file, setFile] = useState(null);
+    const [photo, setPhoto] = useState<null | any>(null)
+    useEffect(() => {
+        dispatch(getAlbum(params.id) as any)
+        dispatch(getPhotos(params.id) as any)
+    }, [])
+
     const onAddClick = () => {
         // @ts-ignore
         hiddenFileInput.current.click() ;
     }
     const onUploadChange = (e: any) => {
-        const fileUploaded = e.target.files[0];
-        setFile(e.target.files[0])
-        dispatch(addPhoto(fileUploaded.name, userId, album.id, fileUploaded.type, file ) as any)
+        setPhoto(e.target.files[0]);
+    }
+    const sendImage = (e: any) => {
+            const formData = new FormData();
+            formData.append(photo.name, photo);
+            dispatch(addPhoto(photo.name, userId, album.id, photo.type, photo ) as any)
+        setPhoto(null)
+        dispatch(getPhotos(params.id) as any)
+
     }
     return (
         <Wrapper>
@@ -67,6 +74,7 @@ const Album = () => {
                        style={{display: "none"}}
                 />
                 <Button onClick={onAddClick} >Add photos</Button>
+                <button onClick={sendImage} >send</button>
             </Inner>
         </Wrapper>
     );
