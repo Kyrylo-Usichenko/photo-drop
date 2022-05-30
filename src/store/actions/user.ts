@@ -7,10 +7,10 @@ export const userActions = createActionCreators(User);
 
 export type UserActions = ReturnType<typeof userActions.setAuth
     | typeof userActions.setUser
-    | typeof userActions.setAlbums
+    | typeof userActions.getAlbums
     | typeof userActions.setAlbumToStore
     | typeof userActions.setLoading
-    | typeof userActions.setPhotos
+    | typeof userActions.getPhotos
     | typeof userActions.setError>
 
 export const setAuth =
@@ -39,21 +39,21 @@ export const setAuth =
     }
   };
 
-export const setAlbums =
+export const getAlbums =
     (userId: string): AsyncAction =>
         async (dispatch,
                _,
                { mainProtectedApi }) => {
             try {
                 const response = await mainProtectedApi.getAlbums(userId);
-                dispatch(userActions.setAlbums(response.data))
+                dispatch(userActions.getAlbums(response.data))
                 dispatch(userActions.setLoading(false))
             } catch (e) {
                 console.log(e);
             }
         };
 
-export const setAlbum =
+export const getAlbum =
     (albumId?: string): AsyncAction =>
         async (dispatch,
                _,
@@ -73,7 +73,9 @@ export const getPhotos =
                { mainProtectedApi }) => {
             try {
                 const response = await mainProtectedApi.getPhotos(albumId);
-                dispatch(userActions.setPhotos(response.data))
+                console.log('new data')
+                console.log(response)
+                    dispatch(userActions.getPhotos(response.data))
             } catch (e) {
                 console.log(e);
             }
@@ -90,7 +92,8 @@ export const addAlbum =
                     "name": name,
                     "location": location
                 });
-                dispatch(setAlbums(userId))
+                    dispatch(getAlbums(userId))
+
             } catch (e) {
                 console.log(e);
             }
@@ -103,15 +106,21 @@ export const addPhoto =
                { mainProtectedApi }) => {
             try {
                 const data = {
-                    name,
-                    ownerId,
-                    albumId,
-                    fileType
+                    name: name,
+                    ownerId: ownerId,
+                    albumId: albumId,
+                    fileType: fileType
                 };
                 const response = await mainProtectedApi.getAddPhotoUrlS3(data);
                 const fields = response.data.fields;
-                const response2 = await mainProtectedApi.setPhoto(fields, file);
+                const response2 = await mainProtectedApi.setPhoto(fields, file , response.data.url);
                 console.log(response2)
+                const photos = await dispatch(getPhotos(albumId));
+                console.log(photos)
+
+
+
+
 
             } catch (e) {
                 console.log(e);
