@@ -11,10 +11,12 @@ interface UserState {
   albums: any
   album: {
     name: string | null,
-    location: string | null
+    location: string | null,
+    id: string | null
   }
   isLoading: boolean,
-  error: string | null
+  error: string | null,
+  photos: any
 }
 
 const initialState: UserState = {
@@ -28,10 +30,12 @@ const initialState: UserState = {
   albums: [],
   album: {
     name: null,
-    location: null
+    location: null,
+    id: null
   },
   isLoading: true,
-  error: null
+  error: null,
+  photos: []
 };
 
 
@@ -48,15 +52,19 @@ export class User extends ImmerReducer<UserState> {
   setAlbums(albums: any) {
     this.draftState.albums = albums;
   }
-  setAlbumToStore(album: {name: string, location: string}) {
+  setAlbumToStore(album: {name: string, location: string, id: string}) {
     this.draftState.album.name = album.name;
     this.draftState.album.location = album.location;
+    this.draftState.album.id = album.id;
   }
   setLoading(value: boolean) {
     this.draftState.isLoading = value;
   }
   setError(error: string | null) {
     this.draftState.error = error;
+  }
+  setPhotos(photos: any) {
+    this.draftState.photos = photos;
   }
 }
 

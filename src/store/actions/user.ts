@@ -10,6 +10,7 @@ export type UserActions = ReturnType<typeof userActions.setAuth
     | typeof userActions.setAlbums
     | typeof userActions.setAlbumToStore
     | typeof userActions.setLoading
+    | typeof userActions.setPhotos
     | typeof userActions.setError>
 
 export const setAuth =
@@ -65,6 +66,19 @@ export const setAlbum =
             }
         };
 
+export const getPhotos =
+    (albumId?: string): AsyncAction =>
+        async (dispatch,
+               _,
+               { mainProtectedApi }) => {
+            try {
+                const response = await mainProtectedApi.getPhotos(albumId);
+                dispatch(userActions.setPhotos(response.data))
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
 export const addAlbum =
     (name: string, location: string, userId: string): AsyncAction =>
         async (dispatch,
@@ -77,6 +91,28 @@ export const addAlbum =
                     "location": location
                 });
                 dispatch(setAlbums(userId))
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+export const addPhoto =
+    (name: string, ownerId: string, albumId: string, fileType: string, file: any): AsyncAction =>
+        async (dispatch,
+               _,
+               { mainProtectedApi }) => {
+            try {
+                const data = {
+                    name,
+                    ownerId,
+                    albumId,
+                    fileType
+                };
+                const response = await mainProtectedApi.getAddPhotoUrlS3(data);
+                const fields = response.data.fields;
+                const response2 = await mainProtectedApi.setPhoto(fields, file);
+                console.log(response2)
+
             } catch (e) {
                 console.log(e);
             }

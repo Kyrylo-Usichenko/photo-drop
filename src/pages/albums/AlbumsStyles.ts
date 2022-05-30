@@ -12,7 +12,7 @@ export const Albums: any = styled.div`
 export const Album: any = styled.div`
   width: 100%;
   height: 80px;
-  margin-bottom: 20px;
+  margin: 4px 0;
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -57,10 +57,14 @@ export const Name: any = styled.div`
   font-stretch: normal;
   font-style: normal;
   line-height: 1.4;
+  -webkit-letter-spacing: 0.3px;
+  -moz-letter-spacing: 0.3px;
+  -ms-letter-spacing: 0.3px;
   letter-spacing: 0.3px;
-  color: rgb(33, 39, 46);
+  color: rgb(33,39,46);
   word-break: break-word;
   text-transform: capitalize;
+  -webkit-text-decoration: none;
   text-decoration: none;
   text-underline: none;
 `;
@@ -84,12 +88,10 @@ export const Location: any = styled.div`
 `;
 export const ButtonAdd: any = styled(Button)`
   height: 50px;
-  margin: 0 0 10px 0;
 `;
 
 export const ButtonCreate: any = styled(Button)`
   height: 50px;
-  
 `;
 
 export const Value: any = styled.div`

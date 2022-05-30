@@ -58,7 +58,7 @@ const Home = () => {
               <Album>
                 <div style={{display: "flex"}}>
                   <IconWrapper>
-                    <AiOutlineFolder color={'black'}/>
+                    <AiOutlineFolder size={24} color={'black'}/>
                   </IconWrapper>
                   <div>
                     <Name>{album.name}</Name>

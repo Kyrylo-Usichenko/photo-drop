@@ -74,3 +74,4 @@ export const NumberOfPhotos: any = styled.div`
   line-height: 18px;
   margin-left: 20px;
 `;
+

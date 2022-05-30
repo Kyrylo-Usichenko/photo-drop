@@ -15,7 +15,6 @@ export const Button: any = styled.button`
   line-height: 23px;
   text-align: center;
   color: #ffffff;
-  margin: 20px 0 0;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -23,6 +22,7 @@ export const Button: any = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  margin: 20px 0 10px;
 
   &:focus {
     outline: none;
