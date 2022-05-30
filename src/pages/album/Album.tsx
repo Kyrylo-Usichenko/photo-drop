@@ -1,18 +1,33 @@
-import {Button} from "../../components/Button/Button";
-import {Back, Inner, Name, Nav, Photo, Photos, Date, NumberOfPhotos, AlbumHeader, AlbumInfo} from "./AlbumStyles";
+import {Back, Inner, Name, Nav, AlbumHeader} from "./AlbumStyles";
 import {Wrapper} from "../../components/Container/Container";
 import {Link, useParams} from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setAlbum} from "../../store/actions/user";
+import {addPhoto, setAlbum, getPhotos} from "../../store/actions/user";
+import { Button } from "../../components/Button/Button";
+import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 
 const Album = () => {
     const dispatch = useDispatch();
     const params = useParams();
     useEffect(() => {
         dispatch(setAlbum(params.id) as any)
+        dispatch(getPhotos(params.id) as any)
     }, [])
     const album = useSelector((state: any) => state.userReducer.album)
+    const photos = useSelector((state: any) => state.userReducer.photos)
+    const hiddenFileInput = useRef(null);
+    const userId = TokensLocalStorage.getInstance().getUser()
+    const [file, setFile] = useState(null);
+    const onAddClick = () => {
+        // @ts-ignore
+        hiddenFileInput.current.click() ;
+    }
+    const onUploadChange = (e: any) => {
+        const fileUploaded = e.target.files[0];
+        setFile(e.target.files[0])
+        dispatch(addPhoto(fileUploaded.name, userId, album.id, fileUploaded.type, file ) as any)
+    }
     return (
         <Wrapper>
             <Inner>
@@ -45,7 +60,13 @@ const Album = () => {
                         <Name>Location: {album.location}</Name>
                     </AlbumHeader>
                 </Nav>
-                <Button>Add photos</Button>
+                <div>count of photos: {photos.length}</div>
+                <input type="file"
+                       ref={hiddenFileInput}
+                       onChange={onUploadChange}
+                       style={{display: "none"}}
+                />
+                <Button onClick={onAddClick} >Add photos</Button>
             </Inner>
         </Wrapper>
     );

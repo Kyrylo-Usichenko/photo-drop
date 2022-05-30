@@ -29,7 +29,11 @@ export default class MainProtected extends HttpClientProtected {
             }
         });
 
-
+    public getPhotos = (albumId?: string) =>
+        this.instance.get<any>(`/photos/${albumId}`, { headers:{
+                'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
+            }
+        });
 
     public createAlbum = (data: {}) =>
         this.instance.post<any>('/album/create', data,{ headers:{
@@ -41,5 +45,19 @@ export default class MainProtected extends HttpClientProtected {
                 'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
             }, data
         });
+    public getAddPhotoUrlS3 = (data: {name: string, ownerId: string, albumId: string, fileType: string}) =>
+        this.instance.get<any>(`/presigned-post-url?name=${data.name}&owner_id=d3acd1a9-a945-4ebe-be4e-ea747dac3bfe&album_id=${data.albumId}&file_type=${data.fileType}`, { headers:{
+                'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
+            }
+        })
+
+    public setPhoto = (fields: any, file: any) =>
+    this.instance.post<any>(`/presigned-post-url?key=${fields.key}&bucket=${fields.bucket}&X-Amz-Algorithm=${fields["X-Amz-Algorithm"]}&X-Amz-Credential=${fields["X-Amz-Credential"]}&X-Amz-Date=${fields["X-Amz-Date"]}&X-Amz-Security-Token=${fields["X-Amz-Security-Token"]}&Policy=${fields.Policy}&X-Amz-Signature=${fields["X-Amz-Signature"]}&X-Amz-SignedHeaders=${"host"}&X-Amz-Expires=${"3600"}`,
+        {acl: "public-read", key: fields.key, bucket: fields.bucket, "X-Amz-Algorithm": fields["X-Amz-Algorithm"],
+        "X-Amz-Credential": fields["X-Amz-Credential"], "X-Amz-Date": fields["X-Amz-Date"], "X-Amz-Security-Token": fields["X-Amz-Security-Token"], Policy: fields.Policy, "X-Amz-Signature": fields["X-Amz-Signature"], file: file},
+        { headers:{
+            'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
+        }
+    })
 
 }
