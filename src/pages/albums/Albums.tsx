@@ -58,6 +58,8 @@ const Home = () => {
         } else {
             dispatch(addAlbum(name, location, id) as any)
             setIsOpen(false)
+            setName('')
+            setLocation('')
             setMessage(null)
         }
     }
@@ -118,12 +120,15 @@ const Home = () => {
                                     <Input value={name}
                                                      onChange={(e: any) => setName(e.currentTarget.value)}
                                                      type="text"
+                                           placeholder={'Album name'}
                                                      onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id) as any) : null}
                                     />
                                     <Input value={location}
                                                          onChange={(e: any) => setLocation(e.currentTarget.value)}
                                                          type="text"
-                                                         onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id) as any) : null}
+                                           placeholder={'Location'}
+
+                                           onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id) as any) : null}
                                     />
                                     <ButtonCreate onClick={onAddClick}>add</ButtonCreate>
                                 </CreateMenuInner>

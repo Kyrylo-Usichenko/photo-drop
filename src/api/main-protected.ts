@@ -18,32 +18,16 @@ export default class MainProtected extends HttpClientProtected {
     };
 
     public getAlbums = (userId: {}) =>
-        this.instance.get<any>(`/albums/${userId}`, {
-            headers: {
-                'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
-            }
-        });
+        this.instance.get<any>(`/albums`);
 
     public getAlbum = (albumId?: string) =>
-        this.instance.get<any>(`/album/${albumId}`, {
-            headers: {
-                'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
-            }
-        });
+        this.instance.get<any>(`/album/${albumId}`);
 
     public getPhotos = (albumId?: string) =>
-        this.instance.get<any>(`/photos/${albumId}`, {
-            headers: {
-                'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
-            }
-        });
+        this.instance.get<any>(`/photos/${albumId}`);
 
     public createAlbum = (data: {}) =>
-        this.instance.post<any>('/album/create', data, {
-            headers: {
-                'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
-            }
-        });
+        this.instance.post<any>('/album/create', data);
 
     public editAlbum = (data: {}) =>
         this.instance.patch<any>('/album/edit', {
@@ -52,7 +36,7 @@ export default class MainProtected extends HttpClientProtected {
             }, data
         });
     public getAddPhotoUrlS3 = (data: { name: string, ownerId: string, albumId: string, fileType: string }) =>
-        this.instance.get<any>(`/presigned-post-url?name=${data.name}&owner_id=${data.ownerId}&album_id=${data.albumId}&file_type=${data.fileType}`, {
+        this.instance.get<any>(`/presigned-post-url?name=${data.name}&album_id=${data.albumId}&file_type=${data.fileType}`, {
             headers: {
                 'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
             }
