@@ -88,7 +88,6 @@ export const addAlbum =
                { mainProtectedApi }) => {
             try {
                 const response = await mainProtectedApi.createAlbum({
-                    "owner_id": userId,
                     "name": name,
                     "location": location
                 });

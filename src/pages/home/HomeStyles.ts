@@ -6,8 +6,8 @@ export const Inner: any = styled.div`
 export const LogoWrapper: any = styled.div`
   text-align: center;
   padding: 20px 0;
-  border-top: 1px solid #F1F0EC;
   border-bottom: 1px solid #F1F0EC;
+  height: 63px;
 `;
 export const Form: any = styled.form`
   display: flex;

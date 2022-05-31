@@ -32,7 +32,7 @@ export const Nav: any = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  height: 55px;
+  height: 63px;
   padding: 20px 0;
   border-top: 1px solid #F1F0EC;
   border-bottom: 1px solid #F1F0EC;

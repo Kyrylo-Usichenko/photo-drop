@@ -63,8 +63,8 @@ const Album = () => {
                             </Link>
                     </Back>
                     <AlbumHeader>
-                        <Name>Name: {album.name}</Name>
-                        <Name>Location: {album.location}</Name>
+                        <Name>{album.name}</Name>
+                        <Name>{album.location}</Name>
                     </AlbumHeader>
                 </Nav>
                 <div>count of photos: {photos.length}</div>

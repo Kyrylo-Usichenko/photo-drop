@@ -11,7 +11,7 @@ export const Albums: any = styled.div`
 `;
 export const Album: any = styled.div`
   width: 100%;
-  height: 80px;
+  height: 61px;
   margin: 4px 0;
   border-radius: 6px;
   display: flex;
@@ -47,9 +47,11 @@ export const CreateMenu: any = styled.div<{ isOpen: boolean }>`
 export const CreateMenuInner: any = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 120px 0 0;
   width: 100%;
   height: 100vh;
-  min-width: 420px;
+  max-width: 420px;
+  margin: 0 auto;
 `;
 
 export const Name: any = styled.div`
@@ -116,7 +118,7 @@ export const CreateWrapper: any = styled.div`
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  height: 72px;
+  height: 63px;
   border-bottom: 1px solid #F1F0EC;
 
 `;

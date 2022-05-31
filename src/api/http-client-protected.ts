@@ -20,7 +20,7 @@ export default abstract class HttpClientProtected extends HttpClient {
 
         const modifiedConfig = config;
         // @ts-ignore
-        // modifiedConfig.headers.Authorization = `Bearer ${token}`;
+        modifiedConfig.headers.Authorization = `Bearer ${token}`;
 
         return config;
     };
