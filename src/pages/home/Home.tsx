@@ -9,6 +9,7 @@ import { setAuth } from "../../store/actions/user";
 import {Link, useNavigate} from "react-router-dom";
 import {history} from "../../store";
 import Albums from "../albums/Albums";
+import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 
 const Home = () => {
     const [login, setLogin] = useState<string>("");
@@ -16,9 +17,14 @@ const Home = () => {
     const dispatch = useDispatch();
     const nav = useNavigate();
 
+
     const isAuth = useSelector((state: any)=> state.userReducer.isAuth)
     const error = useSelector((state: any)=> state.userReducer.error)
     useEffect(()=> {
+        if (TokensLocalStorage.getInstance().getUser() !== null) {
+            nav('albums')
+            debugger
+        }
         if (isAuth) {
             nav('albums');
         }
