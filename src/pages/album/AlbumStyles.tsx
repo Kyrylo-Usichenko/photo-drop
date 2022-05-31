@@ -33,10 +33,20 @@ export const Nav: any = styled.div`
   position: relative;
   width: 100%;
   height: 63px;
-  padding: 20px 0;
   border-top: 1px solid #F1F0EC;
   border-bottom: 1px solid #F1F0EC;
+  padding: 12px 16px;
 `;
+export const PhotosWrapper: any = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px 0 0;
+`;
+export const Img: any = styled.img`
+  border-radius: 8%;
+  object-fit: contain;
+`;
+
 export const Back: any = styled.div`
 `;
 
@@ -73,5 +83,12 @@ export const NumberOfPhotos: any = styled.div`
   font-size: 14px;
   line-height: 18px;
   margin-left: 20px;
+`;
+export const PhotoWrapper: any = styled.div`
+  flex: 0 0 33.333333%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 

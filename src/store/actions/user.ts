@@ -53,6 +53,11 @@ export const getAlbums =
             }
         };
 
+export const setLoading = (loading: boolean) =>
+        (dispatch: any) => {
+                dispatch(userActions.setLoading(loading))
+        };
+
 export const getAlbum =
     (albumId?: string): AsyncAction =>
         async (dispatch,
@@ -74,9 +79,7 @@ export const getPhotos =
             try {
                 const response = await mainProtectedApi.getPhotos(albumId);
                 dispatch(userActions.getPhotos(response.data))
-                console.log('get photos')
-                console.log(response)
-
+                dispatch(userActions.setLoading(false))
             } catch (e) {
                 console.log(e);
             }
