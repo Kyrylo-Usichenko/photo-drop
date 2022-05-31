@@ -1,9 +1,9 @@
-import {Back, Inner, Name, Nav, AlbumHeader} from "./AlbumStyles";
+import {Back, Inner, Name, Nav, AlbumHeader, PhotosWrapper, Img, Photos, PhotoWrapper} from "./AlbumStyles";
 import {Wrapper} from "../../components/Container/Container";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addPhoto, getAlbum, getPhotos} from "../../store/actions/user";
+import {addPhoto, getAlbum, getPhotos, setLoading} from "../../store/actions/user";
 import { Button } from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 
@@ -15,9 +15,11 @@ const Album = () => {
     const hiddenFileInput = useRef(null);
     const userId = TokensLocalStorage.getInstance().getUser()
     const [photo, setPhoto] = useState<null | any>(null)
+    const isLoading = useSelector((state: any) => state.userReducer.isLoading)
     const nav = useNavigate();
 
     useEffect(() => {
+        dispatch(setLoading(true) as any)
         if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
             nav('/')
             debugger
@@ -73,15 +75,24 @@ const Album = () => {
                         <Name>{album.location}</Name>
                     </AlbumHeader>
                 </Nav>
-                <div>{photos && photos.map((photo: any) => <div key={photo.id}><img width={'100px'} height={'100px'} src={photo.url} alt=""/></div>)}</div>
+                <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.id}><Img width={'100px'} height={'100px'} src={photo.url} alt=""/></PhotoWrapper>)}</PhotosWrapper>
                 <input type="file"
                        ref={hiddenFileInput}
                        onChange={onUploadChange}
                        style={{display: "none"}}
                 />
-                <Button onClick={onAddClick} >Add photos</Button>
-                <button onClick={sendImage} >send</button>
+
+
             </Inner>
+            {
+                isLoading ? null : (
+                    <div>
+                        <Button onClick={onAddClick} >Add photo</Button>
+                        <Button onClick={sendImage} >Accept</Button>
+                    </div>
+
+                )
+            }
         </Wrapper>
     );
 };

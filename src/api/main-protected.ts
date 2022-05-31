@@ -21,22 +21,22 @@ export default class MainProtected extends HttpClientProtected {
         this.instance.get<any>(`/albums`);
 
     public getAlbum = (albumId?: string) =>
-        this.instance.get<any>(`/album/${albumId}`);
+        this.instance.get<any>(`/albums/${albumId}`);
 
     public getPhotos = (albumId?: string) =>
         this.instance.get<any>(`/photos/${albumId}`);
 
     public createAlbum = (data: {}) =>
-        this.instance.post<any>('/album/create', data);
+        this.instance.post<any>('/albums/create', data);
 
     public editAlbum = (data: {}) =>
-        this.instance.patch<any>('/album/edit', {
+        this.instance.patch<any>('/albums/edit', {
             headers: {
                 'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
             }, data
         });
     public getAddPhotoUrlS3 = (data: { name: string, ownerId: string, albumId: string, fileType: string }) =>
-        this.instance.get<any>(`/presigned-post-url?name=${data.name}&album_id=${data.albumId}&file_type=${data.fileType}`)
+        this.instance.get<any>(`/presign-url?name=${data.name}&album_id=${data.albumId}&file_type=${data.fileType}`)
 
 
 
