@@ -65,7 +65,6 @@ export class User extends ImmerReducer<UserState> {
   }
   getPhotos(photos: any) {
     this.draftState.photos = photos;
-    console.log(photos.length)
   }
 }
 

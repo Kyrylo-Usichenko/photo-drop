@@ -1,6 +1,6 @@
 import {Back, Inner, Name, Nav, AlbumHeader} from "./AlbumStyles";
 import {Wrapper} from "../../components/Container/Container";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addPhoto, getAlbum, getPhotos} from "../../store/actions/user";
@@ -15,7 +15,13 @@ const Album = () => {
     const hiddenFileInput = useRef(null);
     const userId = TokensLocalStorage.getInstance().getUser()
     const [photo, setPhoto] = useState<null | any>(null)
+    const nav = useNavigate();
+
     useEffect(() => {
+        if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
+            nav('/')
+            debugger
+        }
         dispatch(getAlbum(params.id) as any)
         dispatch(getPhotos(params.id) as any)
     }, [])
@@ -67,7 +73,7 @@ const Album = () => {
                         <Name>{album.location}</Name>
                     </AlbumHeader>
                 </Nav>
-                <div>count of photos: {photos.length}</div>
+                <div>{photos && photos.map((photo: any) => <div key={photo.id}><img width={'100px'} height={'100px'} src={photo.url} alt=""/></div>)}</div>
                 <input type="file"
                        ref={hiddenFileInput}
                        onChange={onUploadChange}

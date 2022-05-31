@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Container, Wrapper} from "../../components/Container/Container";
 import {
     Album,
@@ -34,7 +34,12 @@ const Home = () => {
     const [message, setMessage]: any = useState(null)
     const isLoading = useSelector((state: any) => state.userReducer.isLoading)
     const id = TokensLocalStorage.getInstance().getUser()
+    const nav = useNavigate();
     useEffect(() => {
+        if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
+            nav('/')
+            debugger
+        }
         dispatch(getAlbums(id) as any);
         const updatePosition = () => {
             setIsOpen(false);
