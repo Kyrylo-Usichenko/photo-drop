@@ -45,7 +45,7 @@ class TokensLocalStorage extends LocalStorage<Locals> {
   }
 
   public clear() {
-    this.clearItems([Locals.ACCESS_TOKEN, Locals.REFRESH_TOKEN]);
+    this.clearItems([Locals.ACCESS_TOKEN, Locals.REFRESH_TOKEN, Locals.user]);
   }
 }
 

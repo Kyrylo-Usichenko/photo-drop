@@ -39,12 +39,18 @@ const Album = () => {
         hiddenFileInput.current.click();
     }
     const onUploadChange = (e: any) => {
-        setPhoto(e.target.files[0]);
+        const file = e.target.files[0];
+        const newFile = {...file};
+        newFile.lastModified = file.lastModified
+        newFile.lastModifiedDate = file.lastModifiedDate
+        newFile.name = file.name.split('.').slice(0, -1).join('.')
+        newFile.size = file.size
+        newFile.type = file.type.split('/').slice(1, 2).join('/')
+        newFile.webkitRelativePath = file.webkitRelativePath
+        setPhoto(newFile);
     }
     const sendImage = (e: any) => {
-        const formData = new FormData();
-        formData.append(photo.name, photo);
-        dispatch(addPhoto(photo.name, userId, album.id, photo.type, photo))
+        dispatch(addPhoto(photo.name, userId, album.id, photo.type, photo, photos))
         setPhoto(null)
 
     }

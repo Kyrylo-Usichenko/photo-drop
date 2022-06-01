@@ -36,9 +36,15 @@ const Home = () => {
     const isLoading = useSelector((state: any) => state.userReducer.isLoading)
     const id = TokensLocalStorage.getInstance().getUser()
     const nav = useNavigate();
+    const messageError = useSelector((state: any) => state.userReducer.errorMessage)
     useEffect(() => {
         if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
             nav('/')
+        }
+        if (messageError === 'Forbidden'){
+            TokensLocalStorage.getInstance().clear()
+            nav('/')
+
         }
         dispatch(getAlbums(id));
         const updatePosition = () => {
