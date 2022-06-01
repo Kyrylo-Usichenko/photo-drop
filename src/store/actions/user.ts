@@ -11,6 +11,7 @@ export type UserActions = ReturnType<typeof userActions.setAuth
     | typeof userActions.setAlbumToStore
     | typeof userActions.setLoading
     | typeof userActions.getPhotos
+    | typeof userActions.setMessageError
     | typeof userActions.setError>
 
 export const setAuth =
@@ -48,8 +49,8 @@ export const getAlbums =
                 const response = await mainProtectedApi.getAlbums(userId);
                 dispatch(userActions.getAlbums(response.data))
                 dispatch(userActions.setLoading(false))
-            } catch (e) {
-                console.log(e);
+            } catch (e: any) {
+                dispatch(setMessageError(e.response.data.message))
             }
         };
 
@@ -67,8 +68,20 @@ export const getAlbum =
             try {
                 const response = await mainProtectedApi.getAlbum(albumId);
                 dispatch(userActions.setAlbumToStore(response.data))
+            } catch (e: any) {
+                console.log(e)
+
+            }
+        };
+
+export const setMessageError =
+    (message: string): AsyncAction =>
+        async (dispatch) => {
+            try {
+                dispatch(userActions.setMessageError(message))
             } catch (e) {
                 console.log(e);
+
             }
         };
 
@@ -115,7 +128,7 @@ export const addAlbum =
         };
 
 export const addPhoto =
-    (name: string, ownerId: string, albumId: string, fileType: string, file: any): AsyncAction =>
+    (name: string, ownerId: string, albumId: string, fileType: string, file: any, photos: any): AsyncAction =>
         async (dispatch,
                _,
                {mainProtectedApi, mainApi}) => {
@@ -129,7 +142,10 @@ export const addPhoto =
                 const response = await mainProtectedApi.getAddPhotoUrlS3(data);
                 const fields = response.data.fields;
                 const response2 = await mainApi.setPhoto(fields, file, response.data.url);
-                dispatch(getPhotos(albumId));
+                const newPhotoUrl = response.data.getUrl;
+                const newPhotos = {...photos}
+                console.log(newPhotos)
+                dispatch(userActions.getPhotos(newPhotos));
             } catch (e) {
                 console.log(e);
             }

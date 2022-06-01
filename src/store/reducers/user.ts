@@ -16,7 +16,8 @@ interface UserState {
   }
   isLoading: boolean,
   error: string | null,
-  photos: any
+  photos: any,
+  errorMessage: string
 }
 
 const initialState: UserState = {
@@ -35,7 +36,8 @@ const initialState: UserState = {
   },
   isLoading: true,
   error: null,
-  photos: []
+  photos: [],
+  errorMessage: ''
 };
 
 
@@ -65,6 +67,9 @@ export class User extends ImmerReducer<UserState> {
   }
   getPhotos(photos: any) {
     this.draftState.photos = photos;
+  }
+  setMessageError(message: string) {
+    this.draftState.errorMessage = message;
   }
 }
 
