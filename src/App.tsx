@@ -6,6 +6,8 @@ import Home from "./pages/home/Home";
 import Albums from './pages/albums/Albums';
 import Album from './pages/album/Album';
 
+export type AppDispatch = typeof store.dispatch;
+
 function App() {
   return (
       <Provider store={store}>

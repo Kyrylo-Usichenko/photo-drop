@@ -6,7 +6,6 @@ import { createBrowserHistory } from "history";
 import Main from "../api/main";
 import { UserActions } from "./actions/user";
 import MainProtected from "../api/main-protected";
-
 export const history = createBrowserHistory();
 
 export const api = {
