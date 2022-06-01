@@ -53,6 +53,7 @@ export const getAlbums =
             }
         };
 
+
 export const setLoading = (loading: boolean) =>
         (dispatch: any) => {
                 dispatch(userActions.setLoading(loading))
@@ -85,6 +86,16 @@ export const getPhotos =
             }
         };
 
+export const clearPhotos =
+    (): AsyncAction =>
+        async (dispatch) => {
+            try {
+                dispatch(userActions.getPhotos([]))
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
 export const addAlbum =
     (name: string, location: string, userId: string): AsyncAction =>
         async (dispatch,
@@ -95,7 +106,8 @@ export const addAlbum =
                     "name": name,
                     "location": location
                 });
-                dispatch(getAlbums(userId))
+                    dispatch(getAlbums(userId))
+
 
             } catch (e) {
                 console.log(e);
@@ -116,11 +128,8 @@ export const addPhoto =
                 };
                 const response = await mainProtectedApi.getAddPhotoUrlS3(data);
                 const fields = response.data.fields;
-
                 const response2 = await mainApi.setPhoto(fields, file, response.data.url);
-                console.log('upload photo')
-                console.log(response2)
-                const photos = await dispatch(getPhotos(albumId));
+                dispatch(getPhotos(albumId));
             } catch (e) {
                 console.log(e);
             }

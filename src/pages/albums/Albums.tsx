@@ -13,7 +13,7 @@ import {
     Input,
     ButtonBack,
     CreateAlbum,
-    CreateWrapper
+    CreateWrapper,
 } from "./AlbumsStyles";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
@@ -22,10 +22,11 @@ import Logo from "../../components/Logo/Logo";
 import {LogoWrapper} from "../home/HomeStyles";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import {AiOutlineFolder} from 'react-icons/ai';
+import {AppDispatch} from "../../App";
 
 
 const Home = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const albums = useSelector((state: any) => state.userReducer.albums)
     const user = useSelector((state: any) => state.userReducer.user)
     const [isOpen, setIsOpen] = useState(false)
@@ -38,9 +39,8 @@ const Home = () => {
     useEffect(() => {
         if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
             nav('/')
-            debugger
         }
-        dispatch(getAlbums(id) as any);
+        dispatch(getAlbums(id));
         const updatePosition = () => {
             setIsOpen(false);
         }
@@ -61,7 +61,7 @@ const Home = () => {
         if (name === '' || location === '') {
             return alert('Type all data')
         } else {
-            dispatch(addAlbum(name, location, id) as any)
+            dispatch(addAlbum(name, location, id))
             setIsOpen(false)
             setName('')
             setLocation('')
@@ -87,23 +87,25 @@ const Home = () => {
                                         <Location>{album.location}</Location>
                                     </div>
                                 </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <g fill="none" fillRule="evenodd">
-                                        <g>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                        <g fill="none" fillRule="evenodd">
                                             <g>
                                                 <g>
                                                     <g>
-                                                        <path d="M0 0L16 0 16 16 0 16z"
-                                                              transform="translate(-324 -208) translate(0 184) translate(324 24)"></path>
-                                                        <path fill="#B4BABF"
-                                                              d="M5.267 3.263c-.356.35-.356.914 0 1.263L8.802 8l-3.535 3.474c-.356.35-.356.914 0 1.263.355.35.929.35 1.284 0l4.182-4.11c.356-.35.356-.914 0-1.263l-4.182-4.11c-.346-.341-.93-.341-1.284.008z"
-                                                              transform="translate(-324 -208) translate(0 184) translate(324 24)"></path>
+                                                        <g>
+                                                            <path d="M0 0L16 0 16 16 0 16z"
+                                                                  transform="translate(-324 -208) translate(0 184) translate(324 24)"/>
+                                                            <path fill="#B4BABF"
+                                                                  d="M5.267 3.263c-.356.35-.356.914 0 1.263L8.802 8l-3.535 3.474c-.356.35-.356.914 0 1.263.355.35.929.35 1.284 0l4.182-4.11c.356-.35.356-.914 0-1.263l-4.182-4.11c-.346-.341-.93-.341-1.284.008z"
+                                                                  transform="translate(-324 -208) translate(0 184) translate(324 24)"/>
+                                                        </g>
                                                     </g>
                                                 </g>
                                             </g>
                                         </g>
-                                    </g>
-                                </svg>
+                                    </svg>
+                                </div>
                             </Album>
                         </Link>)}
                     </Albums>
@@ -126,14 +128,14 @@ const Home = () => {
                                                      onChange={(e: any) => setName(e.currentTarget.value)}
                                                      type="text"
                                            placeholder={'Album name'}
-                                                     onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id) as any) : null}
+                                                     onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id)) : null}
                                     />
                                     <Input value={location}
                                                          onChange={(e: any) => setLocation(e.currentTarget.value)}
                                                          type="text"
                                            placeholder={'Location'}
 
-                                           onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id) as any) : null}
+                                           onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id)) : null}
                                     />
                                     <ButtonCreate onClick={onAddClick}>add</ButtonCreate>
                                 </CreateMenuInner>

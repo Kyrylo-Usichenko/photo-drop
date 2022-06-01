@@ -10,11 +10,12 @@ import {Link, useNavigate} from "react-router-dom";
 import {history} from "../../store";
 import Albums from "../albums/Albums";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
+import { AppDispatch } from "../../App";
 
 const Home = () => {
     const [login, setLogin] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const nav = useNavigate();
 
 
@@ -23,7 +24,6 @@ const Home = () => {
     useEffect(()=> {
         if (TokensLocalStorage.getInstance().getUser() !== null) {
             nav('albums')
-            debugger
         }
         if (isAuth) {
             nav('albums');
@@ -55,18 +55,19 @@ const Home = () => {
                             value={login}
                             placeholder="Login"
                             type="text"
-                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuth(login, password) as any) : null}
+                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuth(login, password)) : null}
                         />
                         <Input
                             onChange={onPasswordChange}
                             value={password}
                             placeholder="Password"
                             type="password"
-                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuth(login, password) as any) : null}
+                            autocomplete="on"
+                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuth(login, password)) : null}
                         />
                         <Button
                             type="button"
-                            onClick={() => dispatch(setAuth(login, password) as any)}
+                            onClick={() => dispatch(setAuth(login, password))}
 
                         >Sign in</Button>
                     </Form>

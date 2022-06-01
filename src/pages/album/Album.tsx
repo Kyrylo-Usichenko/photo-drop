@@ -3,12 +3,13 @@ import {Wrapper} from "../../components/Container/Container";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addPhoto, getAlbum, getPhotos, setLoading} from "../../store/actions/user";
-import { Button } from "../../components/Button/Button";
+import {addPhoto, clearPhotos, getAlbum, getPhotos, setLoading} from "../../store/actions/user";
+import {Button} from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
+import {AppDispatch} from "../../App";
 
 const Album = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const params = useParams();
     const album = useSelector((state: any) => state.userReducer.album)
     const photos = useSelector((state: any) => state.userReducer.photos)
@@ -19,28 +20,32 @@ const Album = () => {
     const nav = useNavigate();
 
     useEffect(() => {
-        dispatch(setLoading(true) as any)
+        dispatch(setLoading(true))
         if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
             nav('/')
-            debugger
         }
-        dispatch(getAlbum(params.id) as any)
-        dispatch(getPhotos(params.id) as any)
+        dispatch(getAlbum(params.id))
+        dispatch(getPhotos(params.id))
+        return () => {
+            return (
+                dispatch(setLoading(true)),
+                dispatch(clearPhotos())
+            )
+        }
     }, [])
 
     const onAddClick = () => {
         // @ts-ignore
-        hiddenFileInput.current.click() ;
+        hiddenFileInput.current.click();
     }
     const onUploadChange = (e: any) => {
         setPhoto(e.target.files[0]);
     }
     const sendImage = (e: any) => {
-            const formData = new FormData();
-            formData.append(photo.name, photo);
-            dispatch(addPhoto(photo.name, userId, album.id, photo.type, photo ) as any)
+        const formData = new FormData();
+        formData.append(photo.name, photo);
+        dispatch(addPhoto(photo.name, userId, album.id, photo.type, photo))
         setPhoto(null)
-        dispatch(getPhotos(params.id) as any)
 
     }
     return (
@@ -57,10 +62,10 @@ const Album = () => {
                                                 <g>
                                                     <g>
                                                         <path d="M0 0L24 0 24 24 0 24z"
-    transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
+                                                              transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
                                                         <path fill="#21272E"
-    d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"
-    transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
+                                                              d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"
+                                                              transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
                                                     </g>
                                                 </g>
                                             </g>
@@ -68,14 +73,17 @@ const Album = () => {
                                     </g>
                                 </g>
                             </svg>
-                            </Link>
+                        </Link>
                     </Back>
                     <AlbumHeader>
                         <Name>{album.name}</Name>
                         <Name>{album.location}</Name>
                     </AlbumHeader>
                 </Nav>
-                <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.id}><Img width={'100px'} height={'100px'} src={photo.url} alt=""/></PhotoWrapper>)}</PhotosWrapper>
+                <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.id}><Img width={'100px'}
+                                                                                                       height={'100px'}
+                                                                                                       src={photo.url}
+                                                                                                       alt=""/></PhotoWrapper>)}</PhotosWrapper>
                 <input type="file"
                        ref={hiddenFileInput}
                        onChange={onUploadChange}
@@ -87,8 +95,8 @@ const Album = () => {
             {
                 isLoading ? null : (
                     <div>
-                        <Button onClick={onAddClick} >Add photo</Button>
-                        <Button onClick={sendImage} >Accept</Button>
+                        <Button onClick={onAddClick}>Add photo</Button>
+                        <Button onClick={sendImage}>Accept</Button>
                     </div>
 
                 )
