@@ -39,7 +39,6 @@ const Home = () => {
     const id = TokensLocalStorage.getInstance().getUser()
     const nav = useNavigate();
     const messageError = useSelector((state: any) => state.userReducer.errorMessage)
-    console.log(albums)
     useEffect(() => {
         if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
             nav('/')
@@ -50,7 +49,6 @@ const Home = () => {
 
         }
         if (albums.length === 0) {
-            console.log('0')
             dispatch(getAlbums(id));
         } else {
             dispatch(setLoading(false))
