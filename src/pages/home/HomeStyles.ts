@@ -8,6 +8,7 @@ export const LogoWrapper: any = styled.div`
   padding: 20px 0;
   border-bottom: 1px solid #F1F0EC;
   height: 63px;
+  position: relative;
 `;
 export const Form: any = styled.form`
   display: flex;

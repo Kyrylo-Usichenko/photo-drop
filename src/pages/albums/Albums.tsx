@@ -15,6 +15,7 @@ import {
     CreateAlbum,
     CreateWrapper,
     LoaderWrapper,
+    AddButton,
 } from "./AlbumsStyles";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
@@ -39,8 +40,7 @@ const Home = () => {
     const id = TokensLocalStorage.getInstance().getUser()
     const nav = useNavigate();
     const messageError = useSelector((state: any) => state.userReducer.errorMessage)
-    console.log(messageError)
-
+    console.log(isOpen)
     useEffect(() => {
         // if (messageError === 'Forbidden') {
         //     TokensLocalStorage.getInstance().clear()
@@ -59,15 +59,15 @@ const Home = () => {
         } else {
             dispatch(setLoading(false))
         }
-        const updatePosition = () => {
-            setIsOpen(false);
-        }
+        // const updatePosition = () => {
+        //     setIsOpen(false);
+        // }
         window.addEventListener('keydown', function (event) {
             if (event.key === "Escape") {
                 setIsOpen(false)
             }
         });
-        updatePosition();
+        // updatePosition();
         return () => window.removeEventListener("keydown", function (event) {
             if (event.key === "Escape") {
                 setIsOpen(false)
@@ -90,6 +90,14 @@ const Home = () => {
         <Wrapper>
             <LogoWrapper>
                 <Logo/>
+                <AddButton onClick={() => setIsOpen(true)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                         className="feather feather-plus">
+                        <line x1="12" y1="5" x2="12" y2="19"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                </AddButton>
             </LogoWrapper>
             <Container>
                 {isLoading ?
@@ -184,10 +192,6 @@ const Home = () => {
                             </Wrapper>
 
                         </CreateMenu>
-                        {isLoading ? null : (
-                            <ButtonAdd type="button" onClick={() => setIsOpen(true)} value={'Create new album'}>+ Create
-                                new
-                                album</ButtonAdd>)}
                     </div>}
 
             </Container>

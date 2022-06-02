@@ -167,3 +167,28 @@ export const Input: any = styled.input`
     color: #6d6d6d;
   }
 `;
+
+export const AddButton: any = styled.button`
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid rgb(218, 225, 232);
+  background-color: rgb(240, 241, 242);
+  margin-left: 8px;
+  display: inline-flex;
+  float: right;
+  //margin-top: -15px;
+  //margin-right: 10px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  text-decoration: none;
+  color: rgb(33, 39, 46);
+  flex-shrink: 0;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+`;
