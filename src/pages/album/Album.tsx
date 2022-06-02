@@ -14,11 +14,12 @@ import {Wrapper} from "../../components/Container/Container";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addPhoto, clearPhotos, getAlbum, getPhotos, setLoading} from "../../store/actions/user";
+import {addPhoto, clearAlbum, clearPhotos, getAlbum, getPhotos, setLoading} from "../../store/actions/user";
 import {Button} from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import {AppDispatch} from "../../App";
 import Loader from "../../components/Loader/Loader";
+import {clear} from "@testing-library/user-event/dist/clear";
 
 const Album = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -39,12 +40,12 @@ const Album = () => {
         dispatch(getAlbum(params.id))
         dispatch(getPhotos(params.id))
         return () => {
-            return (
-                dispatch(setLoading(true)),
-                    dispatch(clearPhotos())
-            )
+            dispatch(setLoading(true))
+            dispatch(clearAlbum())
+            dispatch(clearPhotos())
         }
     }, [])
+
 
     const onAddClick = () => {
         // @ts-ignore
