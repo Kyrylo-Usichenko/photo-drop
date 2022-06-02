@@ -31,7 +31,7 @@ const Album = () => {
     const [photo, setPhoto] = useState<null | any>(null)
     const isLoading = useSelector((state: any) => state.userReducer.isLoading)
     const nav = useNavigate();
-
+    console.log(photos)
     useEffect(() => {
         dispatch(setLoading(true))
         if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
@@ -60,6 +60,7 @@ const Album = () => {
         newFile.size = file.size
         newFile.type = file.type.split('/').slice(1, 2).join('/')
         newFile.webkitRelativePath = file.webkitRelativePath
+        console.log(file)
         setPhoto(file);
         dispatch(addPhoto(file.name, userId, album.id, file.type, file, photos))
         setPhoto(null)

@@ -33,9 +33,8 @@ export const Nav: any = styled.div`
   position: relative;
   width: 100%;
   height: 63px;
-  border-top: 1px solid #F1F0EC;
   border-bottom: 1px solid #F1F0EC;
-  padding: 12px 10px;
+  padding: 12px 15px;
   justify-content: space-between;
 `;
 export const PhotosWrapper: any = styled.div`
