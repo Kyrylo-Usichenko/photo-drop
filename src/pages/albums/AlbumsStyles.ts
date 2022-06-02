@@ -8,6 +8,8 @@ export const Albums: any = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 15px;
+  padding-bottom: 20px;
+
 `;
 export const LoaderWrapper: any = styled.div`
     margin: 100px auto 0;
@@ -188,7 +190,7 @@ export const AddButton: any = styled.button`
   color: rgb(33, 39, 46);
   flex-shrink: 0;
   position: absolute;
-  right: 10px;
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
 `;
