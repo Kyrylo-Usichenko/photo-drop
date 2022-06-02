@@ -1,4 +1,15 @@
-import {Back, Inner, Name, Nav, AlbumHeader, PhotosWrapper, Img, Photos, PhotoWrapper} from "./AlbumStyles";
+import {
+    Back,
+    Inner,
+    Name,
+    Nav,
+    AlbumHeader,
+    PhotosWrapper,
+    Img,
+    Photos,
+    PhotoWrapper,
+    LoaderWrapper
+} from "./AlbumStyles";
 import {Wrapper} from "../../components/Container/Container";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
@@ -7,6 +18,7 @@ import {addPhoto, clearPhotos, getAlbum, getPhotos, setLoading} from "../../stor
 import {Button} from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import {AppDispatch} from "../../App";
+import Loader from "../../components/Loader/Loader";
 
 const Album = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -29,7 +41,7 @@ const Album = () => {
         return () => {
             return (
                 dispatch(setLoading(true)),
-                dispatch(clearPhotos())
+                    dispatch(clearPhotos())
             )
         }
     }, [])
@@ -86,27 +98,28 @@ const Album = () => {
                         <Name>{album.location}</Name>
                     </AlbumHeader>
                 </Nav>
-                <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.id}><Img width={'100px'}
-                                                                                                       height={'100px'}
-                                                                                                       src={photo.url}
-                                                                                                       alt=""/></PhotoWrapper>)}</PhotosWrapper>
-                <input type="file"
-                       ref={hiddenFileInput}
-                       onChange={onUploadChange}
-                       style={{display: "none"}}
-                />
-
-
-            </Inner>
-            {
-                isLoading ? null : (
+                {isLoading ? <LoaderWrapper><Loader/></LoaderWrapper> : (
                     <div>
-                        <Button onClick={onAddClick}>Add photo</Button>
-                        <Button onClick={sendImage}>Accept</Button>
+                        <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.id}>
+                                <Img
+                                    src={photo.url}
+                                    alt=""/>
+                            </PhotoWrapper>
+                        )}
+                        </PhotosWrapper>
+                        <div>
+                            <input type="file"
+                                   ref={hiddenFileInput}
+                                   onChange={onUploadChange}
+                                   style={{display: "none"}}
+                            />
+                            <Button onClick={onAddClick}>Add photo</Button>
+                            <Button onClick={sendImage}>Accept</Button>
+                        </div>
                     </div>
-
                 )
-            }
+                }
+            </Inner>
         </Wrapper>
     );
 };

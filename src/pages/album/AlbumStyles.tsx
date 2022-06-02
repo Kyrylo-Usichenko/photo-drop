@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const Inner: any = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ export const Photo: any = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  flex: 0 0 33.333333%;
+  flex: 0 0 33%;
 
   &:focus {
     outline: none;
@@ -40,11 +40,12 @@ export const Nav: any = styled.div`
 export const PhotosWrapper: any = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 40px 0 0;
+  
 `;
 export const Img: any = styled.img`
-  border-radius: 8%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export const Back: any = styled.div`
@@ -64,31 +65,25 @@ export const Name: any = styled.div`
   margin-right: 20px;
 `;
 
-export const AlbumInfo: any = styled.div`
-  display: flex;
-`;
-
-export const Date: any = styled.div`
-  font-style: normal;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
-`;
-
-export const NumberOfPhotos: any = styled.div`
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
-  margin-left: 20px;
-`;
 export const PhotoWrapper: any = styled.div`
   flex: 0 0 33.333333%;
+  height: 125px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  object-fit: cover;
+  @media (min-width: 425px) {
+    height: 142px;
+  }
+  @media (min-width: 768px) {
+    height: 186px;
+  }
 `;
+
+export const LoaderWrapper: any = styled.div`
+  margin-top: 100px;
+`;
+
+
+
 

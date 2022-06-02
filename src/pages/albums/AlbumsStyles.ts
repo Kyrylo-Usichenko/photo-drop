@@ -9,6 +9,10 @@ export const Albums: any = styled.div`
   justify-content: space-between;
   padding-top: 15px;
 `;
+export const LoaderWrapper: any = styled.div`
+    margin: 100px auto 0;
+  text-align: center;
+`;
 export const Album: any = styled.div`
   width: 100%;
   height: 61px;
@@ -92,10 +96,18 @@ export const Location: any = styled.div`
 `;
 export const ButtonAdd: any = styled(Button)`
   height: 50px;
+  position: fixed;
+  bottom: 5px;
+  max-width: 540px;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
 `;
 
 export const ButtonCreate: any = styled(Button)`
   height: 50px;
+  
 `;
 export const ButtonBack: any = styled.div`
   cursor: pointer;
