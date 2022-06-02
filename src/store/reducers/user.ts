@@ -71,6 +71,11 @@ export class User extends ImmerReducer<UserState> {
   setMessageError(message: string) {
     this.draftState.errorMessage = message;
   }
+  clearAlbum() {
+    this.draftState.album.id = null;
+    this.draftState.album.name = null;
+    this.draftState.album.location = null;
+  }
 }
 
 export default createReducerFunction(User, initialState);

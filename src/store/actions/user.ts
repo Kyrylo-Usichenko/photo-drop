@@ -12,13 +12,13 @@ export type UserActions = ReturnType<typeof userActions.setAuth
     | typeof userActions.setLoading
     | typeof userActions.getPhotos
     | typeof userActions.setMessageError
+    | typeof userActions.clearAlbum
     | typeof userActions.setError>
 
 export const setAuthData =
     (login: string, password: string): AsyncAction =>
         async (dispatch, _, {mainApi}) => {
             try {
-                console.log('auth')
                 const AuthData = `${login};${password}`;
                 const auth_data: string = btoa(AuthData);
                 const response = await mainApi.login(auth_data);
@@ -120,6 +120,15 @@ export const clearPhotos =
                 console.log(e);
             }
         };
+export const clearAlbum =
+    (): AsyncAction =>
+        async (dispatch) => {
+            try {
+                dispatch(userActions.clearAlbum())
+            } catch (e) {
+                console.log(e);
+            }
+        };
 
 export const addAlbum =
     (name: string, location: string, userId: string): AsyncAction =>
@@ -153,14 +162,10 @@ export const addPhoto =
                 };
                 const response = await mainProtectedApi.getAddPhotoUrlS3(data);
                 const fields = response.data.fields;
-                console.log(response)
                 const response2 = await mainApi.setPhoto(fields, file, response.data.url);
                 const newPhotoUrl = response.data.getUrl;
-                console.log(photos)
                 const newPhotos = [...photos]
-                console.log(newPhotos)
                 newPhotos.push({url: newPhotoUrl})
-                console.log(newPhotos)
                 dispatch(userActions.getPhotos(newPhotos));
             } catch (e) {
                 console.log(e);

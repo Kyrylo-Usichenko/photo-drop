@@ -10,9 +10,7 @@ const Protected = ( {children}: any) => {
     const isLoggedIn = useSelector((state: any) => state.userReducer.isAuth)
     const messageError = useSelector((state: any) => state.userReducer.errorMessage)
 
-    console.log(isLoggedIn)
     if (!isLoggedIn && !TokensLocalStorage.getInstance().getAccessToken()) {
-        console.log('to main')
         TokensLocalStorage.getInstance().clear()
         dispatch(setMessageError(''))
         return <Navigate to="/" replace />;

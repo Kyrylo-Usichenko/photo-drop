@@ -40,7 +40,6 @@ const Home = () => {
     const id = TokensLocalStorage.getInstance().getUser()
     const nav = useNavigate();
     const messageError = useSelector((state: any) => state.userReducer.errorMessage)
-    console.log(isOpen)
     useEffect(() => {
         // if (messageError === 'Forbidden') {
         //     TokensLocalStorage.getInstance().clear()
