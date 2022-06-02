@@ -40,8 +40,12 @@ export const Nav: any = styled.div`
 export const PhotosWrapper: any = styled.div`
   display: flex;
   flex-wrap: wrap;
-  
+  width: 100%;
 `;
+export const MainWrapper: any = styled.div`
+  width: 100%;
+`;
+
 export const Img: any = styled.img`
   width: 100%;
   height: 100%;

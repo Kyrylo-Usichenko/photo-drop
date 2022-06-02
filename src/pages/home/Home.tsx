@@ -5,10 +5,8 @@ import { Container, Wrapper } from "../../components/Container/Container";
 
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import { setAuth } from "../../store/actions/user";
+import { setAuthData } from "../../store/actions/user";
 import {Link, useNavigate} from "react-router-dom";
-import {history} from "../../store";
-import Albums from "../albums/Albums";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import { AppDispatch } from "../../App";
 
@@ -17,8 +15,6 @@ const Home = () => {
     const [password, setPassword] = useState<string>("");
     const dispatch = useDispatch<AppDispatch>();
     const nav = useNavigate();
-
-
     const isAuth = useSelector((state: any)=> state.userReducer.isAuth)
     const error = useSelector((state: any)=> state.userReducer.error)
     useEffect(()=> {
@@ -55,7 +51,7 @@ const Home = () => {
                             value={login}
                             placeholder="Login"
                             type="text"
-                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuth(login, password)) : null}
+                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuthData(login, password)) : null}
                         />
                         <Input
                             onChange={onPasswordChange}
@@ -63,11 +59,11 @@ const Home = () => {
                             placeholder="Password"
                             type="password"
                             autocomplete="on"
-                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuth(login, password)) : null}
+                            onKeyPress={(e: any) => e.key === "Enter" ? dispatch(setAuthData(login, password)) : null}
                         />
                         <Button
                             type="button"
-                            onClick={() => dispatch(setAuth(login, password))}
+                            onClick={() => dispatch(setAuthData(login, password))}
 
                         >Sign in</Button>
                     </Form>

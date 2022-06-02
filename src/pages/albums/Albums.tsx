@@ -39,15 +39,21 @@ const Home = () => {
     const id = TokensLocalStorage.getInstance().getUser()
     const nav = useNavigate();
     const messageError = useSelector((state: any) => state.userReducer.errorMessage)
-    useEffect(() => {
-        if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
-            nav('/')
-        }
-        if (messageError === 'Forbidden') {
-            TokensLocalStorage.getInstance().clear()
-            nav('/')
+    console.log(messageError)
 
-        }
+    useEffect(() => {
+        // if (messageError === 'Forbidden') {
+        //     TokensLocalStorage.getInstance().clear()
+        //     dispatch(setAuth(false))
+        //     return nav('/')
+        // }
+        // if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
+        //     console.log(TokensLocalStorage.getInstance().getUser())
+        //     console.log('to main')
+        //     debugger
+        //     nav('/')
+        // }
+
         if (albums.length === 0) {
             dispatch(getAlbums(id));
         } else {
@@ -67,7 +73,7 @@ const Home = () => {
                 setIsOpen(false)
             }
         });
-    }, [])
+    })
 
     const onAddClick = () => {
         if (name === '' || location === '') {

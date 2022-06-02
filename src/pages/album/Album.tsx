@@ -8,7 +8,7 @@ import {
     Img,
     Photos,
     PhotoWrapper,
-    LoaderWrapper
+    LoaderWrapper, MainWrapper
 } from "./AlbumStyles";
 import {Wrapper} from "../../components/Container/Container";
 import {Link, useNavigate, useParams} from "react-router-dom";
@@ -59,7 +59,7 @@ const Album = () => {
         newFile.size = file.size
         newFile.type = file.type.split('/').slice(1, 2).join('/')
         newFile.webkitRelativePath = file.webkitRelativePath
-        setPhoto(newFile);
+        setPhoto(file);
     }
     const sendImage = (e: any) => {
         dispatch(addPhoto(photo.name, userId, album.id, photo.type, photo, photos))
@@ -99,8 +99,8 @@ const Album = () => {
                     </AlbumHeader>
                 </Nav>
                 {isLoading ? <LoaderWrapper><Loader/></LoaderWrapper> : (
-                    <div>
-                        <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.id}>
+                    <MainWrapper style={{width: '100%'}}>
+                        <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.url}>
                                 <Img
                                     src={photo.url}
                                     alt=""/>
@@ -116,7 +116,7 @@ const Album = () => {
                             <Button onClick={onAddClick}>Add photo</Button>
                             <Button onClick={sendImage}>Accept</Button>
                         </div>
-                    </div>
+                    </MainWrapper>
                 )
                 }
             </Inner>
