@@ -14,10 +14,11 @@ export type UserActions = ReturnType<typeof userActions.setAuth
     | typeof userActions.setMessageError
     | typeof userActions.setError>
 
-export const setAuth =
+export const setAuthData =
     (login: string, password: string): AsyncAction =>
         async (dispatch, _, {mainApi}) => {
             try {
+                console.log('auth')
                 const AuthData = `${login};${password}`;
                 const auth_data: string = btoa(AuthData);
                 const response = await mainApi.login(auth_data);
@@ -37,6 +38,17 @@ export const setAuth =
                 dispatch(userActions.setUser(user));
             } catch (e) {
                 console.log(e);
+            }
+        };
+
+export const setAuth =
+    (auth: boolean): AsyncAction =>
+        async (dispatch) => {
+            try {
+                dispatch(userActions.setAuth(auth));
+
+            } catch (e: any) {
+                dispatch(e)
             }
         };
 
@@ -141,9 +153,13 @@ export const addPhoto =
                 };
                 const response = await mainProtectedApi.getAddPhotoUrlS3(data);
                 const fields = response.data.fields;
+                console.log(response)
                 const response2 = await mainApi.setPhoto(fields, file, response.data.url);
                 const newPhotoUrl = response.data.getUrl;
-                const newPhotos = {...photos}
+                console.log(photos)
+                const newPhotos = [...photos]
+                console.log(newPhotos)
+                newPhotos.push({url: newPhotoUrl})
                 console.log(newPhotos)
                 dispatch(userActions.getPhotos(newPhotos));
             } catch (e) {
