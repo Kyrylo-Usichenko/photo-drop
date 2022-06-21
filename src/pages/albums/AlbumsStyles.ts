@@ -12,7 +12,7 @@ export const Albums: any = styled.div`
 
 `;
 export const LoaderWrapper: any = styled.div`
-    margin: 100px auto 0;
+  margin: 100px auto 0;
   text-align: center;
 `;
 export const Album: any = styled.div`
@@ -109,7 +109,7 @@ export const ButtonAdd: any = styled(Button)`
 
 export const ButtonCreate: any = styled(Button)`
   height: 50px;
-  
+
 `;
 export const ButtonBack: any = styled.div`
   cursor: pointer;
@@ -136,7 +136,6 @@ export const CreateWrapper: any = styled.div`
   border-bottom: 1px solid #F1F0EC;
 
 `;
-
 
 
 export const Input: any = styled.input`
@@ -194,7 +193,7 @@ export const AddButton: any = styled.button`
   top: 50%;
   transform: translateY(-50%);
 `;
-export const DataPickerWrapper= styled.div`
+export const DataPickerWrapper = styled.div`
   margin-top: 20px;
   & input {
     outline: none;
@@ -202,7 +201,7 @@ export const DataPickerWrapper= styled.div`
     border: 1px solid #eeeeee;
     border-radius: 10px;
     height: 40px;
-    font-family: 'Roboto',sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -218,12 +217,8 @@ export const DataPickerWrapper= styled.div`
     color: #262626;
     width: 100%;
     padding: 15px 13px;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     cursor: pointer;
     caret-color: transparent;
 
-  }
-
-
-}
-`;
+  }`;
