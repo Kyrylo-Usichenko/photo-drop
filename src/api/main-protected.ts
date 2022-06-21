@@ -35,6 +35,6 @@ export default class MainProtected extends HttpClientProtected {
                 'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
             }, data
         });
-    public getAddPhotoUrlS3 = (data: { name: string, ownerId: string, albumId: string, fileType: string }) =>
+    public getAddPhotoUrlS3 = (data: {albumId: string}) =>
         this.instance.get<any>(`/upload-url/${data.albumId}`)
 }
