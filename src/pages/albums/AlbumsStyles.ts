@@ -194,3 +194,36 @@ export const AddButton: any = styled.button`
   top: 50%;
   transform: translateY(-50%);
 `;
+export const DataPickerWrapper= styled.div`
+  margin-top: 20px;
+  & input {
+    outline: none;
+    background: #f4f4f4;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    height: 40px;
+    font-family: 'Roboto',sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #262626;
+    width: 100%;
+    padding: 15px 13px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    cursor: pointer;
+    caret-color: transparent;
+
+  }
+
+
+}
+`;
