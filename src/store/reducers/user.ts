@@ -17,7 +17,8 @@ interface UserState {
   isLoading: boolean,
   error: string | null,
   photos: any,
-  errorMessage: string
+  errorMessage: string,
+  url: string | null
 }
 
 const initialState: UserState = {
@@ -37,7 +38,8 @@ const initialState: UserState = {
   isLoading: true,
   error: null,
   photos: [],
-  errorMessage: ''
+  errorMessage: '',
+  url: null
 };
 
 
@@ -75,6 +77,9 @@ export class User extends ImmerReducer<UserState> {
     this.draftState.album.id = null;
     this.draftState.album.name = null;
     this.draftState.album.location = null;
+  }
+  setUrl(url: string) {
+    this.draftState.url = url;
   }
 }
 

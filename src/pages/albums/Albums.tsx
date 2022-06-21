@@ -96,7 +96,7 @@ const Home = () => {
                         <Loader/>
                     </LoaderWrapper> : <div>
                         <Albums>
-                            {albums.map((album: any) => <Link key={album.id} to={`/album/${album.id}`}>
+                            {albums && albums.map((album: any) => <Link key={album.id} to={`/album/${album.id}`}>
                                 <Album>
                                     <div style={{display: "flex"}}>
                                         <IconWrapper>

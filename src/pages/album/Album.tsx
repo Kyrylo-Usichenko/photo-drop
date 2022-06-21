@@ -30,6 +30,7 @@ const Album = () => {
     const userId = TokensLocalStorage.getInstance().getUser()
     const [photo, setPhoto] = useState<null | any>(null)
     const isLoading = useSelector((state: any) => state.userReducer.isLoading)
+    const url = useSelector((state: any) => state.userReducer.url)
     const nav = useNavigate();
     console.log(photos)
     useEffect(() => {
@@ -47,23 +48,32 @@ const Album = () => {
     }, [])
 
 
+    useEffect(() => {
+        if(url){
+            window.location = url
+        }
+    }, [url])
+
+
     const onAddClick = () => {
         // @ts-ignore
-        hiddenFileInput.current.click();
+        // hiddenFileInput.current.click();
+        dispatch(addPhoto(album.id))
+
     }
     const onUploadChange = (e: any) => {
-        const file = e.target.files[0];
-        const newFile = {...file};
-        newFile.lastModified = file.lastModified
-        newFile.lastModifiedDate = file.lastModifiedDate
-        newFile.name = file.name.split('.').slice(0, -1).join('.')
-        newFile.size = file.size
-        newFile.type = file.type.split('/').slice(1, 2).join('/')
-        newFile.webkitRelativePath = file.webkitRelativePath
-        console.log(file)
-        setPhoto(file);
-        dispatch(addPhoto(file.name, userId, album.id, file.type, file, photos))
-        setPhoto(null)
+        // const file = e.target.files[0];
+        // const newFile = {...file};
+        // newFile.lastModified = file.lastModified
+        // newFile.lastModifiedDate = file.lastModifiedDate
+        // newFile.name = file.name.split('.').slice(0, -1).join('.')
+        // newFile.size = file.size
+        // newFile.type = file.type.split('/').slice(1, 2).join('/')
+        // newFile.webkitRelativePath = file.webkitRelativePath
+        // console.log(file)
+        // setPhoto(file);
+        // dispatch(addPhoto(file.name, userId, album.id, file.type, file, photos))
+        // setPhoto(null)
     }
     // const sendImage = (e: any) => {
     //     dispatch(addPhoto(photo.name, userId, album.id, photo.type, photo, photos))
