@@ -131,15 +131,17 @@ export const clearAlbum =
         };
 
 export const addAlbum =
-    (name: string, location: string, userId: string): AsyncAction =>
+    (name: string, location: string, userId: string, date: string): AsyncAction =>
         async (dispatch,
                _,
                {mainProtectedApi}) => {
             try {
                 const response = await mainProtectedApi.createAlbum({
                     "name": name,
-                    "location": location
+                    "location": location,
+                    "cloudinary_folder_album": date
                 });
+                console.log(response)
                     dispatch(getAlbums(userId))
 
 
@@ -162,7 +164,7 @@ export const addPhoto =
                 };
                 const response = await mainProtectedApi.getAddPhotoUrlS3(data);
                 const fields = response.data.fields;
-                const response2 = await mainApi.setPhoto(fields, file, response.data.url);
+                const response2 = await mainApi.setPhoto(fields, file, response.data.upload_url);
                 const newPhotoUrl = response.data.getUrl;
                 const newPhotos = [...photos]
                 newPhotos.push({url: newPhotoUrl})
