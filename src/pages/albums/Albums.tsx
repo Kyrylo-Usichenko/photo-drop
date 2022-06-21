@@ -16,6 +16,7 @@ import {
     CreateWrapper,
     LoaderWrapper,
     AddButton,
+    DataPickerWrapper,
 } from "./AlbumsStyles";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
@@ -26,6 +27,7 @@ import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import {AiOutlineFolder} from 'react-icons/ai';
 import {AppDispatch} from "../../App";
 import Loader from "../../components/Loader/Loader";
+import DataPicker from "../../components/DataPicker/DataPicker";
 
 
 const Home = () => {
@@ -41,26 +43,13 @@ const Home = () => {
     const nav = useNavigate();
     const messageError = useSelector((state: any) => state.userReducer.errorMessage)
     useEffect(() => {
-        // if (messageError === 'Forbidden') {
-        //     TokensLocalStorage.getInstance().clear()
-        //     dispatch(setAuth(false))
-        //     return nav('/')
-        // }
-        // if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
-        //     console.log(TokensLocalStorage.getInstance().getUser())
-        //     console.log('to main')
-        //     debugger
-        //     nav('/')
-        // }
-
-        if (albums.length === 0) {
+        if (!albums) {
             dispatch(getAlbums(id));
+
         } else {
             dispatch(setLoading(false))
         }
-        // const updatePosition = () => {
-        //     setIsOpen(false);
-        // }
+
         window.addEventListener('keydown', function (event) {
             if (event.key === "Escape") {
                 setIsOpen(false)
@@ -155,10 +144,10 @@ const Home = () => {
                                                             <g>
                                                                 <g>
                                                                     <path d="M0 0L24 0 24 24 0 24z"
-                                                                          transform="translate(-24 -120) translate(0 96) translate(24 24)"></path>
+    transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
                                                                     <path fill="#21272E"
-                                                                          d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"
-                                                                          transform="translate(-24 -120) translate(0 96) translate(24 24)"></path>
+    d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"
+    transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
                                                                 </g>
                                                             </g>
                                                         </g>
@@ -185,6 +174,9 @@ const Home = () => {
 
                                                onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id)) : null}
                                         />
+                                        <DataPickerWrapper>
+                                            <DataPicker/>
+                                        </DataPickerWrapper>
                                         <ButtonCreate onClick={onAddClick}>add</ButtonCreate>
                                     </CreateMenuInner>
                                 </Container>

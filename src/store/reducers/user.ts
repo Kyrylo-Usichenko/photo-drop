@@ -28,7 +28,7 @@ const initialState: UserState = {
     id: null,
     login: null
   },
-  albums: [],
+  albums: null,
   album: {
     name: null,
     location: null,
