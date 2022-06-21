@@ -37,6 +37,7 @@ const Home = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [name, setName] = useState('')
     const [location, setLocation] = useState('')
+    const [date, setDate] = useState(new Date())
     const [message, setMessage]: any = useState(null)
     const isLoading = useSelector((state: any) => state.userReducer.isLoading)
     const id = TokensLocalStorage.getInstance().getUser()
@@ -55,19 +56,21 @@ const Home = () => {
                 setIsOpen(false)
             }
         });
-        // updatePosition();
         return () => window.removeEventListener("keydown", function (event) {
             if (event.key === "Escape") {
                 setIsOpen(false)
             }
         });
     })
-
     const onAddClick = () => {
         if (name === '' || location === '') {
             return alert('Type all data')
         } else {
-            dispatch(addAlbum(name, location, id))
+            const year = date.getFullYear().toString()
+            const month = (date.getMonth()+1).toString()
+            const day = (date.getDate()).toString()
+            const albumDate = `${year}-${month.length === 1 ? `0${month}` : month}-${day.length === 1 ? `0${day}` : day}`
+            dispatch(addAlbum(name, location, id, albumDate))
             setIsOpen(false)
             setName('')
             setLocation('')
@@ -165,17 +168,17 @@ const Home = () => {
                                                onChange={(e: any) => setName(e.currentTarget.value)}
                                                type="text"
                                                placeholder={'Album name'}
-                                               onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id)) : null}
+                                               onKeyPress={(e: any) => e.key === "Enter" ? onAddClick() : null}
                                         />
                                         <Input value={location}
                                                onChange={(e: any) => setLocation(e.currentTarget.value)}
                                                type="text"
                                                placeholder={'Location'}
 
-                                               onKeyPress={(e: any) => e.key === "Enter" ? dispatch(addAlbum(name, location, user.id)) : null}
+                                               onKeyPress={(e: any) => e.key === "Enter" ? onAddClick() : null}
                                         />
                                         <DataPickerWrapper>
-                                            <DataPicker/>
+                                            <DataPicker onChange={setDate}/>
                                         </DataPickerWrapper>
                                         <ButtonCreate onClick={onAddClick}>add</ButtonCreate>
                                     </CreateMenuInner>
