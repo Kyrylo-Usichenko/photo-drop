@@ -132,7 +132,7 @@ export const clearAlbum =
         };
 
 export const addAlbum =
-    (name: string, location: string, userId: string, date: string): AsyncAction =>
+    (name: string, location: string, userId: string, date: number): AsyncAction =>
         async (dispatch,
                _,
                {mainProtectedApi}) => {

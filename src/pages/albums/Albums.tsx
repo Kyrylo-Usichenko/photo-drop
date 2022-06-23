@@ -70,7 +70,8 @@ const Home = () => {
             const month = (date.getMonth()+1).toString()
             const day = (date.getDate()).toString()
             const albumDate = `${year}-${month.length === 1 ? `0${month}` : month}-${day.length === 1 ? `0${day}` : day}`
-            dispatch(addAlbum(name, location, id, albumDate))
+            const timeStamp = Date.parse(albumDate);
+            dispatch(addAlbum(name, location, id, timeStamp))
             setIsOpen(false)
             setName('')
             setLocation('')
