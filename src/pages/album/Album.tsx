@@ -46,7 +46,7 @@ const Album = () => {
 
 
     useEffect(() => {
-        if(url){
+        if (url) {
             window.open(url);
 
         }
@@ -120,31 +120,32 @@ const Album = () => {
                     {/*    </svg>*/}
                     {/*</AddButton>*/}
                 </Nav>
-                <CloudinaryWrapper>
-                    <Heading>
-                        You can view and add photos in Cloudinary
-                    </Heading>
-                    <Button onClick={onAddClick}>Go to Cloudinary</Button>
-                </CloudinaryWrapper>
+
                 {isLoading ? <LoaderWrapper><Loader/></LoaderWrapper> : (
-                    <MainWrapper style={{width: '100%'}}>
-                        <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.url}>
-                                <Img
-                                    src={photo.url}
-                                    alt=""/>
-                            </PhotoWrapper>
-                        )}
-                        </PhotosWrapper>
-                        <div>
-                            <input type="file"
-                                   ref={hiddenFileInput}
-                                   onChange={onUploadChange}
-                                   style={{display: "none"}}
-                            />
-                            {/*<Button onClick={onAddClick}>Add photo</Button>*/}
-                            {/*<Button onClick={sendImage}>Accept</Button>*/}
-                        </div>
-                    </MainWrapper>
+                    // <MainWrapper style={{width: '100%'}}>
+                    //     <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.url}>
+                    //             <Img
+                    //                 src={photo.url}
+                    //                 alt=""/>
+                    //         </PhotoWrapper>
+                    //     )}
+                    //     </PhotosWrapper>
+                    //     <div>
+                    //         <input type="file"
+                    //                ref={hiddenFileInput}
+                    //                onChange={onUploadChange}
+                    //                style={{display: "none"}}
+                    //         />
+                    //         {/*<Button onClick={onAddClick}>Add photo</Button>*/}
+                    //         {/*<Button onClick={sendImage}>Accept</Button>*/}
+                    //     </div>
+                    // </MainWrapper>
+                    <CloudinaryWrapper>
+                        <Heading>
+                            You can view and add photos in Cloudinary
+                        </Heading>
+                        <Button onClick={onAddClick}>Go to Cloudinary</Button>
+                    </CloudinaryWrapper>
                 )
                 }
             </Inner>
