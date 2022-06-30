@@ -6,9 +6,8 @@ import {
     AlbumHeader,
     PhotosWrapper,
     Img,
-    Photos,
     PhotoWrapper,
-    LoaderWrapper, MainWrapper, Location, AddButton, NavLeft
+    LoaderWrapper, MainWrapper, Location, NavLeft, Heading, CloudinaryWrapper
 } from "./AlbumStyles";
 import {Wrapper} from "../../components/Container/Container";
 import {Link, useNavigate, useParams} from "react-router-dom";
@@ -19,7 +18,6 @@ import {Button} from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import {AppDispatch} from "../../App";
 import Loader from "../../components/Loader/Loader";
-import {clear} from "@testing-library/user-event/dist/clear";
 
 const Album = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +30,6 @@ const Album = () => {
     const isLoading = useSelector((state: any) => state.userReducer.isLoading)
     const url = useSelector((state: any) => state.userReducer.url)
     const nav = useNavigate();
-    console.log(photos)
     useEffect(() => {
         dispatch(setLoading(true))
         if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
@@ -50,7 +47,8 @@ const Album = () => {
 
     useEffect(() => {
         if(url){
-            window.location = url
+            window.open(url);
+
         }
     }, [url])
 
@@ -113,15 +111,21 @@ const Album = () => {
                             <Location>{album.location}</Location>
                         </AlbumHeader>
                     </NavLeft>
-                    <AddButton onClick={onAddClick}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                             className="feather feather-plus">
-                            <line x1="12" y1="5" x2="12" y2="19"/>
-                            <line x1="5" y1="12" x2="19" y2="12"/>
-                        </svg>
-                    </AddButton>
+                    {/*<AddButton onClick={onAddClick}>*/}
+                    {/*    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"*/}
+                    {/*         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"*/}
+                    {/*         className="feather feather-plus">*/}
+                    {/*        <line x1="12" y1="5" x2="12" y2="19"/>*/}
+                    {/*        <line x1="5" y1="12" x2="19" y2="12"/>*/}
+                    {/*    </svg>*/}
+                    {/*</AddButton>*/}
                 </Nav>
+                <CloudinaryWrapper>
+                    <Heading>
+                        You can view and add photos in Cloudinary
+                    </Heading>
+                    <Button onClick={onAddClick}>Go to Cloudinary</Button>
+                </CloudinaryWrapper>
                 {isLoading ? <LoaderWrapper><Loader/></LoaderWrapper> : (
                     <MainWrapper style={{width: '100%'}}>
                         <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.url}>
