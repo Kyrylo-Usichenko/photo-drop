@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import {Button} from "../../components/Button/Button";
 
 export const Inner: any = styled.div`
   display: flex;
@@ -138,6 +139,14 @@ export const AddButton: any = styled.button`
 export const NavLeft: any = styled.div`
   display: flex;
   align-items: center;
+`;
+export const Heading: any = styled.h5`
+  text-align: center;
+  padding: 0;
+  margin: 100px 0 0;
+`;
+export const CloudinaryWrapper: any = styled.div`
+    max-width: 275px;
 `;
 
 
