@@ -23,7 +23,6 @@ export const Button: any = styled.button`
   -ms-user-select: none;
   user-select: none;
   margin: 20px 0 10px;
-
   &:focus {
     outline: none;
   }

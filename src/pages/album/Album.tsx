@@ -4,10 +4,7 @@ import {
     Name,
     Nav,
     AlbumHeader,
-    PhotosWrapper,
-    Img,
-    PhotoWrapper,
-    LoaderWrapper, MainWrapper, Location, NavLeft, Heading, CloudinaryWrapper
+    LoaderWrapper, Location, NavLeft, CloudinaryWrapper
 } from "./AlbumStyles";
 import {Wrapper} from "../../components/Container/Container";
 import {Link, useNavigate, useParams} from "react-router-dom";
@@ -23,13 +20,10 @@ const Album = () => {
     const dispatch = useDispatch<AppDispatch>();
     const params = useParams();
     const album = useSelector((state: any) => state.userReducer.album)
-    const photos = useSelector((state: any) => state.userReducer.photos)
-    const hiddenFileInput = useRef(null);
-    const userId = TokensLocalStorage.getInstance().getUser()
-    const [photo, setPhoto] = useState<null | any>(null)
     const isLoading = useSelector((state: any) => state.userReducer.isLoading)
     const url = useSelector((state: any) => state.userReducer.url)
     const nav = useNavigate();
+
     useEffect(() => {
         dispatch(setLoading(true))
         if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
@@ -44,40 +38,40 @@ const Album = () => {
         }
     }, [])
 
-
     useEffect(() => {
         if (url) {
             window.open(url);
-
         }
     }, [url])
 
 
     const onAddClick = () => {
-        // @ts-ignore
-        // hiddenFileInput.current.click();
         dispatch(addPhoto(album.id))
 
     }
-    const onUploadChange = (e: any) => {
-        // const file = e.target.files[0];
-        // const newFile = {...file};
-        // newFile.lastModified = file.lastModified
-        // newFile.lastModifiedDate = file.lastModifiedDate
-        // newFile.name = file.name.split('.').slice(0, -1).join('.')
-        // newFile.size = file.size
-        // newFile.type = file.type.split('/').slice(1, 2).join('/')
-        // newFile.webkitRelativePath = file.webkitRelativePath
-        // console.log(file)
-        // setPhoto(file);
-        // dispatch(addPhoto(file.name, userId, album.id, file.type, file, photos))
-        // setPhoto(null)
+    let checkUploadResult = (resultEvent: any) => {
+        if (resultEvent.event === 'success') {
+            console.log('dfsdf')
+        }
     }
-    // const sendImage = (e: any) => {
-    //     dispatch(addPhoto(photo.name, userId, album.id, photo.type, photo, photos))
-    //     setPhoto(null)
-    //
-    // }
+
+    // @ts-ignore
+    const widget = window.cloudinary.createUploadWidget({
+            cloudName: 'dnipro-bohdan',
+            apiKey: '985853911877699',
+            apiSecret: 't3KSd0Wp7f_hz3YWUpWuMUSzk2s',
+            folder: 'signed_upload_demo_uw',
+            uploadPreset: 'qf8naspn',
+            sources: ['local'],
+            // secure: false,
+        },
+        (error: any, result: any) => {
+            checkUploadResult(result)
+        })
+    const onWidgetOpenClick = () => {
+        widget.open()
+    }
+
     return (
         <Wrapper>
             <Inner>
@@ -111,40 +105,10 @@ const Album = () => {
                             <Location>{album.location}</Location>
                         </AlbumHeader>
                     </NavLeft>
-                    {/*<AddButton onClick={onAddClick}>*/}
-                    {/*    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"*/}
-                    {/*         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"*/}
-                    {/*         className="feather feather-plus">*/}
-                    {/*        <line x1="12" y1="5" x2="12" y2="19"/>*/}
-                    {/*        <line x1="5" y1="12" x2="19" y2="12"/>*/}
-                    {/*    </svg>*/}
-                    {/*</AddButton>*/}
                 </Nav>
-
                 {isLoading ? <LoaderWrapper><Loader/></LoaderWrapper> : (
-                    // <MainWrapper style={{width: '100%'}}>
-                    //     <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.url}>
-                    //             <Img
-                    //                 src={photo.url}
-                    //                 alt=""/>
-                    //         </PhotoWrapper>
-                    //     )}
-                    //     </PhotosWrapper>
-                    //     <div>
-                    //         <input type="file"
-                    //                ref={hiddenFileInput}
-                    //                onChange={onUploadChange}
-                    //                style={{display: "none"}}
-                    //         />
-                    //         {/*<Button onClick={onAddClick}>Add photo</Button>*/}
-                    //         {/*<Button onClick={sendImage}>Accept</Button>*/}
-                    //     </div>
-                    // </MainWrapper>
                     <CloudinaryWrapper>
-                        <Heading>
-                            You can view and add photos in Cloudinary
-                        </Heading>
-                        <Button onClick={onAddClick}>Go to Cloudinary</Button>
+                        <Button onClick={onWidgetOpenClick}>Upload photos</Button>
                     </CloudinaryWrapper>
                 )
                 }

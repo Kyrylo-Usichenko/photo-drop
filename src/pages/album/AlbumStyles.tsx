@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, {keyframes} from "styled-components";
 import {Button} from "../../components/Button/Button";
 
 export const Inner: any = styled.div`
@@ -74,27 +74,9 @@ export const Name: any = styled.div`
   -moz-letter-spacing: 0.3px;
   -ms-letter-spacing: 0.3px;
   letter-spacing: 0.3px;
-  color: rgb(33,39,46);
+  color: rgb(33, 39, 46);
   word-break: break-word;
   text-transform: capitalize;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  text-underline: none;
-`;
-export const Location: any = styled.div`
-  font-size: 11px;
-  font-weight: 400;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.4;
-  -webkit-letter-spacing: 0.3px;
-  -moz-letter-spacing: 0.3px;
-  -ms-letter-spacing: 0.3px;
-  letter-spacing: 0.3px;
-  color: rgb(120,124,128);
-  word-break: break-word;
-  height: 16px;
-  margin-top: 5px;
   -webkit-text-decoration: none;
   text-decoration: none;
   text-underline: none;
@@ -140,13 +122,30 @@ export const NavLeft: any = styled.div`
   display: flex;
   align-items: center;
 `;
-export const Heading: any = styled.h5`
-  text-align: center;
-  padding: 0;
-  margin: 100px 0 0;
+export let Location: any = styled.div`
+  font-size: 11px;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  -webkit-letter-spacing: 0.3px;
+  -moz-letter-spacing: 0.3px;
+  -ms-letter-spacing: 0.3px;
+  letter-spacing: 0.3px;
+  color: rgb(120, 124, 128);
+  word-break: break-word;
+  height: 16px;
+  margin-top: 5px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  text-underline: none;
 `;
+
+
 export const CloudinaryWrapper: any = styled.div`
-    max-width: 275px;
+  max-width: 275px;
+  width: 100%;
+  margin: 210px 0 0;
 `;
 
 
