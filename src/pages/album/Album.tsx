@@ -22,12 +22,15 @@ import {Button} from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import {AppDispatch} from "../../App";
 import Loader from "../../components/Loader/Loader";
+import ButtonShared from "../../components/ButtonShared/ButtonShared";
 
 const Album = () => {
     const dispatch = useDispatch<AppDispatch>();
     const params = useParams();
+    const [isLoading, setIsLoading] = useState(false)
+    const isPageLoading = useSelector((state: any) => state.userReducer.isLoading)
+
     const album = useSelector((state: any) => state.userReducer.album)
-    const isLoading = useSelector((state: any) => state.userReducer.isLoading)
     const signatureData = useSelector((state: any) => state.userReducer.signatureData)
     const url = useSelector((state: any) => state.userReducer.url)
     const nav = useNavigate();
@@ -49,12 +52,22 @@ const Album = () => {
         (error: any, result: any) => {
             checkUploadResult(result)
         })
-    const onWidgetOpenClick = () => {
+    const onWidgetOpenClick = async () => {
+        setIsLoading(true)
+        await dispatch(getSignature(album.cloudinaryFolderAlbum as string))
 
-        dispatch(getSignature(album.cloudinaryFolderAlbum as string))
     }
     useEffect(() => {
-        if (signatureData) widget.open()
+        const open = async () => {
+            if (signatureData) {
+                await widget.open()
+                setTimeout(() => {
+                    setIsLoading(false)
+                }, 7000)
+            }
+        }
+        open();
+
     }, [signatureData])
 
     useEffect(() => {
@@ -63,17 +76,18 @@ const Album = () => {
             nav('/')
         }
         dispatch(getAlbum(params.id))
-        dispatch(getPhotos(params.id))
+        dispatch(getPhotos())
+
         return () => {
             dispatch(setLoading(true))
             dispatch(clearAlbum())
             dispatch(clearPhotos())
         }
     }, [])
-
     useEffect(() => {
         if (url) {
-            window.open(url);
+            widget.open()
+            setIsLoading(false)
         }
     }, [url])
 
@@ -118,9 +132,9 @@ const Album = () => {
                         </AlbumHeader>
                     </NavLeft>
                 </Nav>
-                {isLoading ? <LoaderWrapper><Loader/></LoaderWrapper> : (
+                {isPageLoading ? <LoaderWrapper><Loader/></LoaderWrapper> : (
                     <CloudinaryWrapper>
-                        <Button onClick={onWidgetOpenClick}>Upload photos</Button>
+                        <ButtonShared isLoading={isLoading} onClick={onWidgetOpenClick}>Upload photos</ButtonShared>
                     </CloudinaryWrapper>
                 )
                 }

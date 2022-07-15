@@ -1,5 +1,4 @@
 import styled, {keyframes} from "styled-components";
-import {Button} from "../../components/Button/Button";
 
 export const Inner: any = styled.div`
   display: flex;
