@@ -12,13 +12,20 @@ interface UserState {
   album: {
     name: string | null,
     location: string | null,
-    id: string | null
+    id: string | null,
+    cloudinaryFolderAlbum: string | null,
   }
   isLoading: boolean,
   error: string | null,
   photos: any,
   errorMessage: string,
   url: string | null
+  signatureData: {
+    signature: string,
+    timestamp: number,
+    uploadPreset: string,
+    folder: string,
+  } | null
 }
 
 const initialState: UserState = {
@@ -33,13 +40,15 @@ const initialState: UserState = {
   album: {
     name: null,
     location: null,
-    id: null
+    id: null,
+    cloudinaryFolderAlbum: null,
   },
   isLoading: true,
   error: null,
   photos: [],
   errorMessage: '',
-  url: null
+  url: null,
+  signatureData: null
 };
 
 
@@ -56,10 +65,11 @@ export class User extends ImmerReducer<UserState> {
   getAlbums(albums: any) {
     this.draftState.albums = albums;
   }
-  setAlbumToStore(album: {name: string, location: string, id: string}) {
+  setAlbumToStore(album: {name: string, location: string, id: string, cloudinary_folder_album: string }) {
     this.draftState.album.name = album.name;
     this.draftState.album.location = album.location;
     this.draftState.album.id = album.id;
+    this.draftState.album.cloudinaryFolderAlbum = album.cloudinary_folder_album;
   }
   setLoading(value: boolean) {
     this.draftState.isLoading = value;
@@ -80,6 +90,9 @@ export class User extends ImmerReducer<UserState> {
   }
   setUrl(url: string) {
     this.draftState.url = url;
+  }
+  setSignature(signatureData: {signature: string, timestamp: number, uploadPreset: string ,folder: string} | null) {
+    this.draftState.signatureData = signatureData;
   }
 }
 

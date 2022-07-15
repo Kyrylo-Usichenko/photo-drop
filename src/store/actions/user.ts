@@ -12,6 +12,7 @@ export type UserActions = ReturnType<typeof userActions.setAuth
     | typeof userActions.setLoading
     | typeof userActions.getPhotos
     | typeof userActions.setMessageError
+    | typeof userActions.setSignature
     | typeof userActions.clearAlbum
     | typeof userActions.setUrl
     | typeof userActions.setError>
@@ -69,9 +70,9 @@ export const getAlbums =
 
 
 export const setLoading = (loading: boolean) =>
-        (dispatch: any) => {
-                dispatch(userActions.setLoading(loading))
-        };
+    (dispatch: any) => {
+        dispatch(userActions.setLoading(loading))
+    };
 
 export const getAlbum =
     (albumId?: string): AsyncAction =>
@@ -142,8 +143,7 @@ export const addAlbum =
                     "location": location,
                     "cloudinary_folder_album": date
                 });
-                console.log(response)
-                    dispatch(getAlbums(userId))
+                dispatch(getAlbums(userId))
 
 
             } catch (e) {
@@ -168,6 +168,33 @@ export const addPhoto =
                 // const newPhotos = [...photos]
                 // newPhotos.push({url: newPhotoUrl})
                 // dispatch(userActions.getPhotos(newPhotos));
+            } catch (e) {
+                console.log(e);
+            }
+        };
+export const getSignature =
+    (cloudinaryFolderAlbum: string): AsyncAction =>
+        async (dispatch,
+               _, {mainProtectedApi}) => {
+            try {
+                const response = await mainProtectedApi.getSignature(cloudinaryFolderAlbum);
+                dispatch(userActions.setSignature({
+                    signature: response.data.signature,
+                    timestamp: response.data.timestamp,
+                    uploadPreset: response.data.upload_preset,
+                    folder: response.data.folder
+                }))
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+export const setSignatureData =
+    (value: null): AsyncAction =>
+        async (dispatch,
+               _, {mainProtectedApi}) => {
+            try {
+                dispatch(userActions.setSignature(value))
             } catch (e) {
                 console.log(e);
             }

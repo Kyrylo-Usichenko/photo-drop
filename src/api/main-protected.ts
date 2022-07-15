@@ -1,5 +1,6 @@
 import HttpClientProtected from './http-client-protected';
 import TokensLocalStorage from "../utils/local-storage/TokensLocalStorage";
+import {getSignature} from "../store/actions/user";
 
 
 export default class MainProtected extends HttpClientProtected {
@@ -35,6 +36,11 @@ export default class MainProtected extends HttpClientProtected {
                 'Authorization-token': `Bearer ${TokensLocalStorage.getInstance().getAccessToken()}`,
             }, data
         });
-    public getAddPhotoUrlS3 = (data: {albumId: string}) =>
+    public getAddPhotoUrlS3 = (data: { albumId: string }) =>
         this.instance.get<any>(`/upload-url/${data.albumId}`)
+    public getSignature = (
+        cloudinaryFolderAlbum: string
+    ) =>
+        this.instance.get<any>(`https://7vylpks0dg.execute-api.us-east-1.amazonaws.com/dev/photos/upload-signature/${cloudinaryFolderAlbum}`)
+
 }

@@ -28,6 +28,7 @@ import {AiOutlineFolder} from 'react-icons/ai';
 import {AppDispatch} from "../../App";
 import Loader from "../../components/Loader/Loader";
 import DataPicker from "../../components/DataPicker/DataPicker";
+import ButtonShared from "../../components/ButtonShared/ButtonShared";
 
 
 const Home = () => {
@@ -37,6 +38,7 @@ const Home = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [name, setName] = useState('')
     const [location, setLocation] = useState('')
+    const [loading, setLoadingLocal] = useState(false)
     const [date, setDate] = useState(new Date())
     const [message, setMessage]: any = useState(null)
     const isLoading = useSelector((state: any) => state.userReducer.isLoading)
@@ -50,7 +52,6 @@ const Home = () => {
         } else {
             dispatch(setLoading(false))
         }
-
         window.addEventListener('keydown', function (event) {
             if (event.key === "Escape") {
                 setIsOpen(false)
@@ -62,16 +63,20 @@ const Home = () => {
             }
         });
     })
-    const onAddClick = () => {
+
+    const onAddClick = async () => {
         if (name === '' || location === '') {
             return alert('Type all data')
         } else {
+            setLoadingLocal(true)
             const timeStamp = date.getTime()
-            dispatch(addAlbum(name, location, id, timeStamp))
-            setIsOpen(false)
+            await dispatch(addAlbum(name, location, id, timeStamp))
+            await setIsOpen(false)
             setName('')
             setLocation('')
             setMessage(null)
+            setLoadingLocal(false)
+
         }
     }
     return (
@@ -144,10 +149,10 @@ const Home = () => {
                                                             <g>
                                                                 <g>
                                                                     <path d="M0 0L24 0 24 24 0 24z"
-    transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
+                                                                          transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
                                                                     <path fill="#21272E"
-    d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"
-    transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
+                                                                          d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"
+                                                                          transform="translate(-24 -120) translate(0 96) translate(24 24)"/>
                                                                 </g>
                                                             </g>
                                                         </g>
@@ -177,7 +182,9 @@ const Home = () => {
                                         <DataPickerWrapper>
                                             <DataPicker onChange={setDate}/>
                                         </DataPickerWrapper>
-                                        <ButtonCreate onClick={onAddClick}>add</ButtonCreate>
+                                        <ButtonShared margin='20px 0 0' onClick={onAddClick} isLoading={loading}>
+                                            add
+                                        </ButtonShared>
                                     </CreateMenuInner>
                                 </Container>
                             </Wrapper>

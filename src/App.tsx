@@ -11,24 +11,24 @@ export type AppDispatch = typeof store.dispatch;
 
 function App() {
     return (
-      <Provider store={store}>
-        <BrowserRouter>
-            <Routes>
-                <Route
-                    path="/albums"
-                    element={
-                        <ProtectedRouter>
-                            <Albums />
-                        </ProtectedRouter>
-                    }
-                />
-              <Route path="/" element={<Home />} />
-              <Route path="/albums" element={<Albums />} />
-              <Route path="/album/:id" element={<Album />} />
-            </Routes>
-        </BrowserRouter>
-      </Provider>
-  );
+        <Provider store={store}>
+            <BrowserRouter>
+                <Routes>
+                    <Route
+                        path="/albums"
+                        element={
+                            <ProtectedRouter>
+                                <Albums/>
+                            </ProtectedRouter>
+                        }
+                    />
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/albums" element={<Albums/>}/>
+                    <Route path="/album/:id" element={<Album/>}/>
+                </Routes>
+            </BrowserRouter>
+        </Provider>
+    );
 }
 
 export default App;

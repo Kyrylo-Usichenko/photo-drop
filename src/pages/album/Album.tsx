@@ -4,80 +4,100 @@ import {
     Name,
     Nav,
     AlbumHeader,
-    PhotosWrapper,
-    Img,
-    PhotoWrapper,
-    LoaderWrapper, MainWrapper, Location, NavLeft, Heading, CloudinaryWrapper
+    LoaderWrapper, Location, NavLeft, CloudinaryWrapper
 } from "./AlbumStyles";
 import {Wrapper} from "../../components/Container/Container";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addPhoto, clearAlbum, clearPhotos, getAlbum, getPhotos, setLoading} from "../../store/actions/user";
+import {
+    clearAlbum,
+    clearPhotos,
+    getAlbum,
+    getPhotos,
+    getSignature,
+    setLoading, setSignatureData
+} from "../../store/actions/user";
 import {Button} from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import {AppDispatch} from "../../App";
 import Loader from "../../components/Loader/Loader";
+import ButtonShared from "../../components/ButtonShared/ButtonShared";
 
 const Album = () => {
     const dispatch = useDispatch<AppDispatch>();
     const params = useParams();
+    const [isLoading, setIsLoading] = useState(false)
+    const isPageLoading = useSelector((state: any) => state.userReducer.isLoading)
+
     const album = useSelector((state: any) => state.userReducer.album)
-    const photos = useSelector((state: any) => state.userReducer.photos)
-    const hiddenFileInput = useRef(null);
-    const userId = TokensLocalStorage.getInstance().getUser()
-    const [photo, setPhoto] = useState<null | any>(null)
-    const isLoading = useSelector((state: any) => state.userReducer.isLoading)
+    const signatureData = useSelector((state: any) => state.userReducer.signatureData)
     const url = useSelector((state: any) => state.userReducer.url)
     const nav = useNavigate();
+
+    const options = {
+        // @ts-ignore
+        cloudName: 'photodropme',
+        apiKey: '249134247665357',
+        folder: signatureData?.folder,
+        uploadPreset: signatureData?.uploadPreset,
+        sources: ['local'],
+        uploadSignatureTimestamp: signatureData?.timestamp,
+        uploadSignature: signatureData?.signature,
+        cropping: false,
+    }
+    // @ts-ignore
+    const widget = window.cloudinary.createUploadWidget(
+        options,
+        (error: any, result: any) => {
+            checkUploadResult(result)
+        })
+    const onWidgetOpenClick = async () => {
+        setIsLoading(true)
+        await dispatch(getSignature(album.cloudinaryFolderAlbum as string))
+
+    }
+    useEffect(() => {
+        const open = async () => {
+            if (signatureData) {
+                await widget.open()
+                setTimeout(() => {
+                    setIsLoading(false)
+                }, 7000)
+            }
+        }
+        open();
+
+    }, [signatureData])
+
     useEffect(() => {
         dispatch(setLoading(true))
         if (TokensLocalStorage.getInstance().getUser() === null || TokensLocalStorage.getInstance().getUser() === undefined) {
             nav('/')
         }
         dispatch(getAlbum(params.id))
-        dispatch(getPhotos(params.id))
+        dispatch(getPhotos())
+
         return () => {
             dispatch(setLoading(true))
             dispatch(clearAlbum())
             dispatch(clearPhotos())
         }
     }, [])
-
-
     useEffect(() => {
         if (url) {
-            window.open(url);
-
+            widget.open()
+            setIsLoading(false)
         }
     }, [url])
 
-
-    const onAddClick = () => {
-        // @ts-ignore
-        // hiddenFileInput.current.click();
-        dispatch(addPhoto(album.id))
-
+    let checkUploadResult = (resultEvent: any) => {
+        if (resultEvent.event === 'success') {
+            dispatch(setSignatureData(null))
+        }
     }
-    const onUploadChange = (e: any) => {
-        // const file = e.target.files[0];
-        // const newFile = {...file};
-        // newFile.lastModified = file.lastModified
-        // newFile.lastModifiedDate = file.lastModifiedDate
-        // newFile.name = file.name.split('.').slice(0, -1).join('.')
-        // newFile.size = file.size
-        // newFile.type = file.type.split('/').slice(1, 2).join('/')
-        // newFile.webkitRelativePath = file.webkitRelativePath
-        // console.log(file)
-        // setPhoto(file);
-        // dispatch(addPhoto(file.name, userId, album.id, file.type, file, photos))
-        // setPhoto(null)
-    }
-    // const sendImage = (e: any) => {
-    //     dispatch(addPhoto(photo.name, userId, album.id, photo.type, photo, photos))
-    //     setPhoto(null)
-    //
-    // }
+
+
     return (
         <Wrapper>
             <Inner>
@@ -111,40 +131,10 @@ const Album = () => {
                             <Location>{album.location}</Location>
                         </AlbumHeader>
                     </NavLeft>
-                    {/*<AddButton onClick={onAddClick}>*/}
-                    {/*    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"*/}
-                    {/*         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"*/}
-                    {/*         className="feather feather-plus">*/}
-                    {/*        <line x1="12" y1="5" x2="12" y2="19"/>*/}
-                    {/*        <line x1="5" y1="12" x2="19" y2="12"/>*/}
-                    {/*    </svg>*/}
-                    {/*</AddButton>*/}
                 </Nav>
-
-                {isLoading ? <LoaderWrapper><Loader/></LoaderWrapper> : (
-                    // <MainWrapper style={{width: '100%'}}>
-                    //     <PhotosWrapper>{photos && photos.map((photo: any) => <PhotoWrapper key={photo.url}>
-                    //             <Img
-                    //                 src={photo.url}
-                    //                 alt=""/>
-                    //         </PhotoWrapper>
-                    //     )}
-                    //     </PhotosWrapper>
-                    //     <div>
-                    //         <input type="file"
-                    //                ref={hiddenFileInput}
-                    //                onChange={onUploadChange}
-                    //                style={{display: "none"}}
-                    //         />
-                    //         {/*<Button onClick={onAddClick}>Add photo</Button>*/}
-                    //         {/*<Button onClick={sendImage}>Accept</Button>*/}
-                    //     </div>
-                    // </MainWrapper>
+                {isPageLoading ? <LoaderWrapper><Loader/></LoaderWrapper> : (
                     <CloudinaryWrapper>
-                        <Heading>
-                            You can view and add photos in Cloudinary
-                        </Heading>
-                        <Button onClick={onAddClick}>Go to Cloudinary</Button>
+                        <ButtonShared isLoading={isLoading} onClick={onWidgetOpenClick}>Upload photos</ButtonShared>
                     </CloudinaryWrapper>
                 )
                 }
