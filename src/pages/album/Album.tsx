@@ -10,7 +10,14 @@ import {Wrapper} from "../../components/Container/Container";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addPhoto, clearAlbum, clearPhotos, getAlbum, getPhotos, setLoading} from "../../store/actions/user";
+import {
+    clearAlbum,
+    clearPhotos,
+    getAlbum,
+    getPhotos,
+    getSignature,
+    setLoading, setSignatureData
+} from "../../store/actions/user";
 import {Button} from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import {AppDispatch} from "../../App";
@@ -21,8 +28,34 @@ const Album = () => {
     const params = useParams();
     const album = useSelector((state: any) => state.userReducer.album)
     const isLoading = useSelector((state: any) => state.userReducer.isLoading)
+    const signatureData = useSelector((state: any) => state.userReducer.signatureData)
     const url = useSelector((state: any) => state.userReducer.url)
     const nav = useNavigate();
+
+    const options = {
+        // @ts-ignore
+        cloudName: 'photodropme',
+        apiKey: '249134247665357',
+        folder: signatureData?.folder,
+        uploadPreset: signatureData?.uploadPreset,
+        sources: ['local'],
+        uploadSignatureTimestamp: signatureData?.timestamp,
+        uploadSignature: signatureData?.signature,
+        cropping: false,
+    }
+    // @ts-ignore
+    const widget = window.cloudinary.createUploadWidget(
+        options,
+        (error: any, result: any) => {
+            checkUploadResult(result)
+        })
+    const onWidgetOpenClick = () => {
+
+        dispatch(getSignature(album.cloudinaryFolderAlbum as string))
+    }
+    useEffect(() => {
+        if (signatureData) widget.open()
+    }, [signatureData])
 
     useEffect(() => {
         dispatch(setLoading(true))
@@ -44,33 +77,12 @@ const Album = () => {
         }
     }, [url])
 
-
-    const onAddClick = () => {
-        dispatch(addPhoto(album.id))
-
-    }
     let checkUploadResult = (resultEvent: any) => {
         if (resultEvent.event === 'success') {
-            console.log('dfsdf')
+            dispatch(setSignatureData(null))
         }
     }
 
-    // @ts-ignore
-    const widget = window.cloudinary.createUploadWidget({
-            cloudName: 'dnipro-bohdan',
-            apiKey: '985853911877699',
-            apiSecret: 't3KSd0Wp7f_hz3YWUpWuMUSzk2s',
-            folder: 'signed_upload_demo_uw',
-            uploadPreset: 'qf8naspn',
-            sources: ['local'],
-            // secure: false,
-        },
-        (error: any, result: any) => {
-            checkUploadResult(result)
-        })
-    const onWidgetOpenClick = () => {
-        widget.open()
-    }
 
     return (
         <Wrapper>
