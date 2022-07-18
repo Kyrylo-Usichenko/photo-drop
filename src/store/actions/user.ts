@@ -180,7 +180,6 @@ export const getSignature =
                _, {mainProtectedApi}) => {
             try {
                 const response = await mainProtectedApi.getSignature(id);
-                console.log(response.data)
                 dispatch(userActions.setSignature({
                     signature: response.data.signature,
                     timestamp: response.data.timestamp,
