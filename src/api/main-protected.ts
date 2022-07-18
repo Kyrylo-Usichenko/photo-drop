@@ -39,8 +39,8 @@ export default class MainProtected extends HttpClientProtected {
     public getAddPhotoUrlS3 = (data: { albumId: string }) =>
         this.instance.get<any>(`/upload-url/${data.albumId}`)
     public getSignature = (
-        cloudinaryFolderAlbum: string
+        id: string
     ) =>
-        this.instance.get<any>(`https://7vylpks0dg.execute-api.us-east-1.amazonaws.com/dev/photos/upload-signature/${cloudinaryFolderAlbum}`)
+        this.instance.get<any>(`https://7vylpks0dg.execute-api.us-east-1.amazonaws.com/dev/photos/upload-signature/${id}`)
 
 }

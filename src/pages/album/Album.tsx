@@ -14,11 +14,9 @@ import {
     clearAlbum,
     clearPhotos,
     getAlbum,
-    getPhotos,
     getSignature,
     setLoading, setSignatureData
 } from "../../store/actions/user";
-import {Button} from "../../components/Button/Button";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
 import {AppDispatch} from "../../App";
 import Loader from "../../components/Loader/Loader";
@@ -34,7 +32,6 @@ const Album = () => {
     const signatureData = useSelector((state: any) => state.userReducer.signatureData)
     const url = useSelector((state: any) => state.userReducer.url)
     const nav = useNavigate();
-
     const options = {
         // @ts-ignore
         cloudName: 'photodropme',
@@ -54,7 +51,8 @@ const Album = () => {
         })
     const onWidgetOpenClick = async () => {
         setIsLoading(true)
-        await dispatch(getSignature(album.cloudinaryFolderAlbum as string))
+        await dispatch(getSignature(album.id))
+        setIsLoading(false)
 
     }
     useEffect(() => {
@@ -76,7 +74,6 @@ const Album = () => {
             nav('/')
         }
         dispatch(getAlbum(params.id))
-        dispatch(getPhotos())
 
         return () => {
             dispatch(setLoading(true))

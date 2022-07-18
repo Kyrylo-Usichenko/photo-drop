@@ -2,6 +2,7 @@ import {User} from "../reducers/user";
 import {createActionCreators} from "immer-reducer";
 import {AsyncAction} from "./common";
 import TokensLocalStorage from "../../utils/local-storage/TokensLocalStorage";
+import {log} from "util";
 
 export const userActions = createActionCreators(User);
 
@@ -82,6 +83,7 @@ export const getAlbum =
             try {
                 const response = await mainProtectedApi.getAlbum(albumId);
                 dispatch(userActions.setAlbumToStore(response.data))
+                dispatch(userActions.setLoading(false))
             } catch (e: any) {
                 console.log(e)
 
@@ -173,11 +175,12 @@ export const addPhoto =
             }
         };
 export const getSignature =
-    (cloudinaryFolderAlbum: string): AsyncAction =>
+    (id: string): AsyncAction =>
         async (dispatch,
                _, {mainProtectedApi}) => {
             try {
-                const response = await mainProtectedApi.getSignature(cloudinaryFolderAlbum);
+                const response = await mainProtectedApi.getSignature(id);
+                console.log(response.data)
                 dispatch(userActions.setSignature({
                     signature: response.data.signature,
                     timestamp: response.data.timestamp,
